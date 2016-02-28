@@ -9,6 +9,7 @@ class Customer {
 	private $fax;
 	private $newsletter;
 	private $address_id;
+    private $folder_name;
 
 	public function __construct($registry) {
 		$this->config = $registry->get('config');
@@ -29,6 +30,9 @@ class Customer {
 				$this->fax = $customer_query->row['fax'];
 				$this->newsletter = $customer_query->row['newsletter'];
 				$this->address_id = $customer_query->row['address_id'];
+                //Need to initialize folder_name
+                $this->folder_name = $customer_query->row['folder_name'];
+               
 
 				$this->db->query("UPDATE " . DB_PREFIX . "customer SET ip = '" . $this->db->escape($this->request->server['REMOTE_ADDR']) . "' WHERE customer_id = '" . (int)$this->customer_id . "'");
 
@@ -62,6 +66,7 @@ class Customer {
 			$this->fax = $customer_query->row['fax'];
 			$this->newsletter = $customer_query->row['newsletter'];
 			$this->address_id = $customer_query->row['address_id'];
+            $this->folder_name = $customer_query->row['folder_name'];
 
 			$this->db->query("UPDATE " . DB_PREFIX . "customer SET ip = '" . $this->db->escape($this->request->server['REMOTE_ADDR']) . "' WHERE customer_id = '" . (int)$this->customer_id . "'");
 
@@ -83,6 +88,7 @@ class Customer {
 		$this->fax = '';
 		$this->newsletter = '';
 		$this->address_id = '';
+        $this->folder_name = '';
 	}
 
 	public function isLogged() {
@@ -124,6 +130,11 @@ class Customer {
 	public function getAddressId() {
 		return $this->address_id;
 	}
+    public function getFolderName() {
+        return $this->folder_name;
+    }
+
+    
 
 	public function getBalance() {
 		$query = $this->db->query("SELECT SUM(amount) AS total FROM " . DB_PREFIX . "customer_transaction WHERE customer_id = '" . (int)$this->customer_id . "'");

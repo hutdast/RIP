@@ -26,9 +26,11 @@ class ControllerCustomerCustomer extends Controller {
 
 			$url = '';
 
+            
 			if (isset($this->request->get['filter_name'])) {
 				$url .= '&filter_name=' . urlencode(html_entity_decode($this->request->get['filter_name'], ENT_QUOTES, 'UTF-8'));
 			}
+             
 
 			if (isset($this->request->get['filter_email'])) {
 				$url .= '&filter_email=' . urlencode(html_entity_decode($this->request->get['filter_email'], ENT_QUOTES, 'UTF-8'));
@@ -441,7 +443,7 @@ class ControllerCustomerCustomer extends Controller {
 		$data['delete'] = $this->url->link('customer/customer/delete', 'token=' . $this->session->data['token'] . $url, 'SSL');
 
 		$data['customers'] = array();
-
+        
 		$filter_data = array(
 			'filter_name'              => $filter_name,
 			'filter_email'             => $filter_email,
@@ -455,9 +457,10 @@ class ControllerCustomerCustomer extends Controller {
 			'start'                    => ($page - 1) * $this->config->get('config_limit_admin'),
 			'limit'                    => $this->config->get('config_limit_admin')
 		);
-
+        
 		$customer_total = $this->model_customer_customer->getTotalCustomers($filter_data);
 
+        
 		$results = $this->model_customer_customer->getCustomers($filter_data);
 
 		foreach ($results as $result) {
@@ -474,7 +477,8 @@ class ControllerCustomerCustomer extends Controller {
 			} else {
 				$unlock = '';
 			}
-
+            
+        
 			$data['customers'][] = array(
 				'customer_id'    => $result['customer_id'],
 				'name'           => $result['name'],
@@ -488,7 +492,7 @@ class ControllerCustomerCustomer extends Controller {
 				'edit'           => $this->url->link('customer/customer/edit', 'token=' . $this->session->data['token'] . '&customer_id=' . $result['customer_id'] . $url, 'SSL')
 			);
 		}
-
+             
 		$data['heading_title'] = $this->language->get('heading_title');
 
 		$data['text_list'] = $this->language->get('text_list');
@@ -510,6 +514,8 @@ class ControllerCustomerCustomer extends Controller {
 		$data['column_action'] = $this->language->get('column_action');
 
 		$data['entry_name'] = $this->language->get('entry_name');
+        
+        
 		$data['entry_email'] = $this->language->get('entry_email');
 		$data['entry_customer_group'] = $this->language->get('entry_customer_group');
 		$data['entry_status'] = $this->language->get('entry_status');
@@ -683,11 +689,13 @@ class ControllerCustomerCustomer extends Controller {
 		$data['text_remove_ban_ip'] = $this->language->get('text_remove_ban_ip');
 
 		$data['entry_customer_group'] = $this->language->get('entry_customer_group');
+        $data['entry_folder_name'] = $this->language->get('entry_folder_name');//RIP mofifications
 		$data['entry_firstname'] = $this->language->get('entry_firstname');
 		$data['entry_lastname'] = $this->language->get('entry_lastname');
 		$data['entry_email'] = $this->language->get('entry_email');
 		$data['entry_telephone'] = $this->language->get('entry_telephone');
 		$data['entry_fax'] = $this->language->get('entry_fax');
+        
 		$data['entry_password'] = $this->language->get('entry_password');
 		$data['entry_confirm'] = $this->language->get('entry_confirm');
 		$data['entry_newsletter'] = $this->language->get('entry_newsletter');
@@ -861,6 +869,16 @@ class ControllerCustomerCustomer extends Controller {
 		} else {
 			$data['customer_group_id'] = $this->config->get('config_customer_group_id');
 		}
+        
+        //RIP modification: Adding the variables that capture the folder name and save it into database
+        if (isset($this->request->post['folder_name'])) {
+            $data['folder_name'] = $this->request->post['folder_name'];
+        } elseif (!empty($customer_info)) {
+            $data['folder_name'] = $customer_info['folder_name'];
+        } else {
+            $data['folder_name'] = '';
+        }
+
 
 		if (isset($this->request->post['firstname'])) {
 			$data['firstname'] = $this->request->post['firstname'];

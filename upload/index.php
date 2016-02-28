@@ -1,15 +1,20 @@
 <?php
 // Version
-define('VERSION', '2.1.0.2');
+define('VERSION', '2.1.0.1');
 
 // Configuration
 if (is_file('config.php')) {
 	require_once('config.php');
+        
+             
 }
+
+ 
 
 // Install
 if (!defined('DIR_APPLICATION')) {
 	header('Location: install/index.php');
+        
 	exit;
 }
 
@@ -209,6 +214,7 @@ if ($customer->isLogged()) {
 } elseif (isset($session->data['guest']) && isset($session->data['guest']['customer_group_id'])) {
 	$config->set('config_customer_group_id', $session->data['guest']['customer_group_id']);
 }
+
 
 // Tracking Code
 if (isset($request->get['tracking'])) {

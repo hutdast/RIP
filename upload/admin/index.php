@@ -1,6 +1,6 @@
 <?php
 // Version
-define('VERSION', '2.1.0.2');
+define('VERSION', '2.1.0.1');
 
 // Configuration
 if (is_file('config.php')) {
@@ -103,7 +103,11 @@ $registry->set('response', $response);
 $cache = new Cache('file');
 $registry->set('cache', $cache);
 
-// Session
+                    // Cache
+$cache = new Cache('file');
+$registry->set('cache', $cache);
+
+                 // Session
 $session = new Session();
 $registry->set('session', $session);
 

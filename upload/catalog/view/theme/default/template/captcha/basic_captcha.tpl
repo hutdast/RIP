@@ -1,5 +1,5 @@
 <div class="form-group required">
-  <?php if (substr($route, 0, 9) == 'checkout/') { ?>
+  <?php if (substr($route, 0, 9) == 'account/') { ?>
   <label class="control-label" for="input-payment-captcha"><?php echo $entry_captcha; ?></label>
   <input type="text" name="captcha" id="input-payment-captcha" class="form-control" />
   <img src="index.php?route=captcha/basic_captcha/captcha" alt="" />

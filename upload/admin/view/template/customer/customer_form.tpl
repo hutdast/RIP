@@ -8,6 +8,7 @@
       <h1><?php echo $heading_title; ?></h1>
       <ul class="breadcrumb">
         <?php foreach ($breadcrumbs as $breadcrumb) { ?>
+         
         <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
         <?php } ?>
       </ul>
@@ -27,7 +28,7 @@
         <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-customer" class="form-horizontal">
           <ul class="nav nav-tabs">
             <li class="active"><a href="#tab-general" data-toggle="tab"><?php echo $tab_general; ?></a></li>
-            <?php if ($customer_id) { ?>
+             <?php if ($customer_id) { ?>
             <li><a href="#tab-history" data-toggle="tab"><?php echo $tab_history; ?></a></li>
             <li><a href="#tab-transaction" data-toggle="tab"><?php echo $tab_transaction; ?></a></li>
             <li><a href="#tab-reward" data-toggle="tab"><?php echo $tab_reward; ?></a></li>
@@ -65,15 +66,32 @@
                           </select>
                         </div>
                       </div>
+                        
+                        <!-- RIP MODIFICATIONS: FOLDER ADDED. -->
+                         <div class="form-group required">
+                        <label class="col-sm-2 control-label" for="input-foldername"><?php echo $entry_folder_name; ?></label>
+                        <div class="col-sm-10">
+                          
+                          <input type="text" name="folder_name" value="<?php echo $folder_name; ?>" placeholder="<?php echo $entry_folder_name; ?>" id="input-foldername" class="form-control" />
+                          <a href=""  data-toggle="image" >CLICK HERE TO UPLOAD THE NEW FOLDER.</a>
+                        
+                        </div>
+                      </div>
+                        
+                        
+                        
                       <div class="form-group required">
                         <label class="col-sm-2 control-label" for="input-firstname"><?php echo $entry_firstname; ?></label>
                         <div class="col-sm-10">
+                          
                           <input type="text" name="firstname" value="<?php echo $firstname; ?>" placeholder="<?php echo $entry_firstname; ?>" id="input-firstname" class="form-control" />
                           <?php if ($error_firstname) { ?>
                           <div class="text-danger"><?php echo $error_firstname; ?></div>
                           <?php } ?>
                         </div>
                       </div>
+                        
+                        
                       <div class="form-group required">
                         <label class="col-sm-2 control-label" for="input-lastname"><?php echo $entry_lastname; ?></label>
                         <div class="col-sm-10">

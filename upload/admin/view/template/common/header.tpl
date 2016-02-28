@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html dir="<?php echo $direction; ?>" lang="<?php echo $lang; ?>">
 <head>
+   
+    
 <meta charset="UTF-8" />
 <title><?php echo $title; ?></title>
 <base href="<?php echo $base; ?>" />
@@ -13,10 +15,17 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
 <script type="text/javascript" src="view/javascript/jquery/jquery-2.1.1.min.js"></script>
 <script type="text/javascript" src="view/javascript/bootstrap/js/bootstrap.min.js"></script>
+     <!--RIP modifications: This is the reference for the editable inputs -->
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+   <script type="text/javascript" src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+    <!--RIP modifications: Ends -->
 <link href="view/stylesheet/bootstrap.css" type="text/css" rel="stylesheet" />
 <link href="view/javascript/font-awesome/css/font-awesome.min.css" type="text/css" rel="stylesheet" />
 <link href="view/javascript/summernote/summernote.css" rel="stylesheet" />
 <script type="text/javascript" src="view/javascript/summernote/summernote.js"></script>
+   
+    
+    
 <script src="view/javascript/jquery/datetimepicker/moment.js" type="text/javascript"></script>
 <script src="view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.js" type="text/javascript"></script>
 <link href="view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.css" type="text/css" rel="stylesheet" media="screen" />
@@ -31,6 +40,9 @@
 <?php foreach ($scripts as $script) { ?>
 <script type="text/javascript" src="<?php echo $script; ?>"></script>
 <?php } ?>
+    
+ 
+    
 </head>
 <body>
 <div id="container">

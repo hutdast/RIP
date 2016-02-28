@@ -36,6 +36,8 @@ class ControllerCommonHeader extends Controller {
 		$data['direction'] = $this->language->get('direction');
 
 		$data['name'] = $this->config->get('config_name');
+        
+    
 
 		if (is_file(DIR_IMAGE . $this->config->get('config_logo'))) {
 			$data['logo'] = $server . 'image/' . $this->config->get('config_logo');
@@ -55,7 +57,10 @@ class ControllerCommonHeader extends Controller {
 		} else {
 			$data['text_wishlist'] = sprintf($this->language->get('text_wishlist'), (isset($this->session->data['wishlist']) ? count($this->session->data['wishlist']) : 0));
 		}
-
+        //RIP modifications: users cannot register themselves, registration would be done on the administrative side.
+        //$data['register'] = $this->url->link('account/register', '', 'SSL');
+        
+        
 		$data['text_shopping_cart'] = $this->language->get('text_shopping_cart');
 		$data['text_logged'] = sprintf($this->language->get('text_logged'), $this->url->link('account/account', '', 'SSL'), $this->customer->getFirstName(), $this->url->link('account/logout', '', 'SSL'));
 
@@ -72,9 +77,10 @@ class ControllerCommonHeader extends Controller {
 
 		$data['home'] = $this->url->link('common/home');
 		$data['wishlist'] = $this->url->link('account/wishlist', '', 'SSL');
+        //Check if user is logged to evaluate which view to show
 		$data['logged'] = $this->customer->isLogged();
 		$data['account'] = $this->url->link('account/account', '', 'SSL');
-		$data['register'] = $this->url->link('account/register', '', 'SSL');
+		
 		$data['login'] = $this->url->link('account/login', '', 'SSL');
 		$data['order'] = $this->url->link('account/order', '', 'SSL');
 		$data['transaction'] = $this->url->link('account/transaction', '', 'SSL');

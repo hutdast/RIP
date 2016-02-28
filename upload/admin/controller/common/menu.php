@@ -12,7 +12,9 @@ class ControllerCommonMenu extends Controller {
 		$data['text_banner'] = $this->language->get('text_banner');
 		$data['text_captcha'] = $this->language->get('text_captcha');
 		$data['text_catalog'] = $this->language->get('text_catalog');
-		$data['text_category'] = $this->language->get('text_category');
+                 //RIP modifications:
+		$data['text_category'] = 'Packages';
+                 //RIP modifications End.
 		$data['text_confirm'] = $this->language->get('text_confirm');
 		$data['text_contact'] = $this->language->get('text_contact');
 		$data['text_country'] = $this->language->get('text_country');

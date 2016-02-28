@@ -78,6 +78,18 @@
               <?php } ?>
             </div>
           </div>
+            
+               <div class="form-group required">
+         <label class="col-sm-2 control-label" for="input-telephone"><?php echo $entry_folder_name; ?></label>
+            <div class="col-sm-10">
+              <input type="text" name="folder_name" value="<?php echo $folder_name; ?>" placeholder="Folder name"  class="form-control" />
+             
+            </div>
+          </div>
+            
+            
+            
+            
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-fax"><?php echo $entry_fax; ?></label>
             <div class="col-sm-10">
