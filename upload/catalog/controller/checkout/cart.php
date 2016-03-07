@@ -289,7 +289,8 @@ class ControllerCheckoutCart extends Controller {
         }
 
 
-        $json['total'] = sprintf($this->language->get('text_items'), $this->cart->countProducts(), $this->currency->format($total));
+        $json['total'] = sprintf($this->language->get('text_items'), $this->cart->countProducts(), "$".$total);
+      
         //Answer to Front end
         $this->response->addHeader('Content-Type: application/json');
         $this->response->setOutput(json_encode($json));

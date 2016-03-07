@@ -5,7 +5,14 @@ body {
 	font-size: 12px;
 	line-height: 20px;
 	width: 100%;
+       
+         
 }
+.login-bg{
+    background-color: #00FF00;
+    background-image: url('../image/paypal_express_mobile.png');
+}
+
 h1, h2, h3, h4, h5, h6 {
 	color: #444;
 }

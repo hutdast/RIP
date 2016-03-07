@@ -120,7 +120,8 @@ class ModelCustomerCustomer extends Model {
 			'c.status',
 			'c.approved',
 			'c.ip',
-			'c.date_added'
+			'c.date_added',
+                        'c.folder_name'
 		);
 
 		if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {

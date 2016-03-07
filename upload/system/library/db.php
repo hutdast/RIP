@@ -11,8 +11,24 @@ class DB {
 			exit('Error: Could not load database driver ' . $driver . '!');
 		}
 	}
-
-	public function query($sql) {
+        public function log($param) {
+            /////////////////////////////////////////////////////////
+                ////////////////////////////////////////////////////////
+      
+                $string = $param. '\r\n';
+          
+                if(!is_writable("logger.txt")){
+                    die('there is a problem '.$string);
+                }else{
+                     $handle = fopen("logger.txt", 'a+');
+                     fwrite($handle, $string);
+                     fclose($handle);
+                }
+             
+                /////////////////////////////////////////////////////////
+                ////////////////////////////////////////////////////////
+        }
+        public function query($sql) {
 		return $this->db->query($sql);
 	}
 

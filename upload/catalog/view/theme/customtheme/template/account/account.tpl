@@ -13,7 +13,7 @@
     <div class="row"><?php echo $column_right; ?>
 
 
-        <div> <?php $testing; ?></div>
+      
         <!-- RIP modifications: -->
         <?php foreach($pictures as $pic){ ?> 
         <div class="product-layout col-lg-3 col-md-3 col-sm-6 col-xs-12">
@@ -70,18 +70,27 @@
             <label class="control-label"> <?php echo $category['dimensions']; ?>: </label>
         </div>
 
-
+<!-- Opt out the values that for deep matte are zero -->
+<?php if($category['deep_matte'] != 0){ ?> 
         <div class="col-sm-3">
-
             <input type="checkbox"  name="value-pair"
                    value="<?php echo $category['dimensions']; ?>~!<?php echo $category['deep_matte']; ?>~!matte" 
                    class="select-Matte"/> &#36;<?php echo $category['deep_matte']; ?>
         </div>
-
-        <div class="col-sm-3">
+<?php }else { ?> 
+<div class="col-sm-3"></div>
+<?php } ?> 
+<!-- Opt out the values that for luster are zero -->
+<?php if($category['luster'] != 0){ ?> 
+       <div class="col-sm-3">
             <input type="checkbox"  name="value-pair" value="<?php echo $category['dimensions']; ?>~!<?php echo $category['luster']; ?>~!luster" 
                    class="select-luster"/> &#36;<?php echo $category['luster']; ?>
         </div>
+<?php }else { ?> 
+<div class="col-sm-3"></div>
+<?php } ?> 
+
+
 
     </div><!--Row Ends.-->
     <?php } ?> 
@@ -153,7 +162,7 @@
     }
     });
     params.push(options);
-    params.push('< ?php echo $customer_id; ? > ');
+    params.push('<?php echo $customer_id; ?> ');
     $(".create-product").dialog({
             
 

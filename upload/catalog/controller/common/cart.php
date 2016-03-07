@@ -30,7 +30,7 @@ class ControllerCommonCart extends Controller {
             $data['text_cart'] = $this->language->get('text_cart');
             $data['text_checkout'] = $this->language->get('text_checkout');
             $data['text_recurring'] = $this->language->get('text_recurring');
-            $data['text_items'] = sprintf($this->language->get('text_items'), $this->cart->countProducts(), $this->currency->format($total));
+            $data['text_items'] = sprintf($this->language->get('text_items'), $this->cart->countProducts(), "$".$total);//RIP modifications
             $data['text_loading'] = $this->language->get('text_loading');
 
             $data['button_remove'] = $this->language->get('button_remove');

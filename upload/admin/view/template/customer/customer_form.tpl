@@ -71,14 +71,13 @@
                          <div class="form-group required">
                         <label class="col-sm-2 control-label" for="input-foldername"><?php echo $entry_folder_name; ?></label>
                         <div class="col-sm-10">
-                          
                           <input type="text" name="folder_name" value="<?php echo $folder_name; ?>" placeholder="<?php echo $entry_folder_name; ?>" id="input-foldername" class="form-control" />
                           <a href=""  data-toggle="image" >CLICK HERE TO UPLOAD THE NEW FOLDER.</a>
-                        
+                       
                         </div>
                       </div>
                         
-                        
+                        <!-- RIP MODIFICATIONS: FOLDER End. -->
                         
                       <div class="form-group required">
                         <label class="col-sm-2 control-label" for="input-firstname"><?php echo $entry_firstname; ?></label>

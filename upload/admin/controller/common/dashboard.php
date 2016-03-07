@@ -5,7 +5,32 @@ class ControllerCommonDashboard extends Controller {
 		$this->load->language('common/dashboard');
 
 		$this->document->setTitle($this->language->get('heading_title'));
-
+                
+                //RIP modification:Check if the folder is 30 days older
+                $date = time();//Today's date equivalent to NOW() sql
+                $this->load->model('customer/customer');
+                $customers = $this->model_customer_customer->getCustomers();
+                foreach ($customers as $customer){
+                  $dateAdded = strtotime($customer['date_added']);
+                  $directory = DIR_IMAGE.'catalog/'.$customer['folder_name'];
+                  if(file_exists($directory)){
+                     $filenames = scandir($directory); 
+                       //Delete after 31 days as soon the admin logs in, this function is triggered
+                    if(($date - $dateAdded) > 2741509 ){
+                         foreach ($filenames as $file){
+                      if(is_file($directory.'/'.$file)){
+                          unlink($directory.'/'.$file);
+                      }
+                  }//foreach files end
+                  //Then we remove the directory
+                 rmdir(DIR_IMAGE.'catalog/'.$customer['folder_name']);
+                }//Check in date ends
+           }//Check for directory exist end.
+       
+      }//foreach customers  end.
+                
+                //RIP modification:End.
+                
 		$data['heading_title'] = $this->language->get('heading_title');
 
 		$data['text_sale'] = $this->language->get('text_sale');

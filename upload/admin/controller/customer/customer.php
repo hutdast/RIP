@@ -689,7 +689,7 @@ class ControllerCustomerCustomer extends Controller {
 		$data['text_remove_ban_ip'] = $this->language->get('text_remove_ban_ip');
 
 		$data['entry_customer_group'] = $this->language->get('entry_customer_group');
-        $data['entry_folder_name'] = $this->language->get('entry_folder_name');//RIP mofifications
+                $data['entry_folder_name'] = $this->language->get('entry_folder_name');//RIP mofifications///////////////////////
 		$data['entry_firstname'] = $this->language->get('entry_firstname');
 		$data['entry_lastname'] = $this->language->get('entry_lastname');
 		$data['entry_email'] = $this->language->get('entry_email');
@@ -869,7 +869,8 @@ class ControllerCustomerCustomer extends Controller {
 		} else {
 			$data['customer_group_id'] = $this->config->get('config_customer_group_id');
 		}
-        
+         ////////////////////////////////////////////////////////////////////////////////////////////////       
+        ////////////////////////////////////////////////////////////////////////////////////////////////
         //RIP modification: Adding the variables that capture the folder name and save it into database
         if (isset($this->request->post['folder_name'])) {
             $data['folder_name'] = $this->request->post['folder_name'];
@@ -911,7 +912,9 @@ class ControllerCustomerCustomer extends Controller {
 		} else {
 			$data['telephone'] = '';
 		}
-
+        ////////////////////////////////////////////////////////////////////////////////////////////////       
+        ////////////////////////////////////////////////////////////////////////////////////////////////
+        //RIP modification: End.
 		if (isset($this->request->post['fax'])) {
 			$data['fax'] = $this->request->post['fax'];
 		} elseif (!empty($customer_info)) {

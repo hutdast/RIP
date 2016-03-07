@@ -30,6 +30,7 @@
         <h3 class="panel-title"><i class="fa fa-list"></i> <?php echo $text_list; ?></h3>
       </div>
       <div class="panel-body">
+         
         <div class="well">
           <div class="row">
             <div class="col-sm-6">
@@ -53,6 +54,7 @@
         </div>
         <form action="<?php echo $delete; ?>" method="post" enctype="multipart/form-data" id="form-upload">
           <div class="table-responsive">
+                
             <table class="table table-bordered table-hover">
               <thead>
                 <tr>
@@ -63,6 +65,7 @@
                     <a href="<?php echo $sort_name; ?>"><?php echo $column_name; ?></a>
                     <?php } ?></td>
                   <td class="text-left"><?php if ($sort == 'filename') { ?>
+                     
                     <a href="<?php echo $sort_filename; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_filename; ?></a>
                     <?php } else { ?>
                     <a href="<?php echo $sort_filename; ?>"><?php echo $column_filename; ?></a>
@@ -89,6 +92,7 @@
                   <td class="text-right"><?php echo $upload['date_added']; ?></td>
                   <td class="text-right"><a href="<?php echo $upload['download']; ?>" data-toggle="tooltip" title="<?php echo $button_download; ?>" class="btn btn-info"><i class="fa fa-download"></i></a></td>
                 </tr>
+               
                 <?php } ?>
                 <?php } else { ?>
                 <tr>

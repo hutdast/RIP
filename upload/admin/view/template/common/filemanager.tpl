@@ -6,8 +6,11 @@
     </div>
     <div class="modal-body">
       <div class="row">
+         
         <div class="col-sm-5"><a href="<?php echo $parent; ?>" data-toggle="tooltip" title="<?php echo $button_parent; ?>" id="button-parent" class="btn btn-default"><i class="fa fa-level-up"></i></a> <a href="<?php echo $refresh; ?>" data-toggle="tooltip" title="<?php echo $button_refresh; ?>" id="button-refresh" class="btn btn-default"><i class="fa fa-refresh"></i></a>
           <button type="button" data-toggle="tooltip" title="<?php echo $button_upload; ?>" id="button-upload" class="btn btn-primary"><i class="fa fa-upload"></i></button>
+        
+          
           <button type="button" data-toggle="tooltip" title="<?php echo $button_folder; ?>" id="button-folder" class="btn btn-default"><i class="fa fa-folder"></i></button>
           <button type="button" data-toggle="tooltip" title="<?php echo $button_delete; ?>" id="button-delete" class="btn btn-danger"><i class="fa fa-trash-o"></i></button>
         </div>
@@ -134,23 +137,27 @@ $('#button-search').on('click', function(e) {
 });
 //--></script>
 <script type="text/javascript"><!--
+    
+   /////////////////////////////////////RIP modifications: multiple files upload/////////////////////////////////////////////////////////////////////////////////////////                
+         
 $('#button-upload').on('click', function() {
 	$('#form-upload').remove();
 
-	$('body').prepend('<form enctype="multipart/form-data" id="form-upload" style="display: none;"><input type="file" name="file" value="" /></form>');
+	$('body').prepend('<form enctype="multipart/form-data" id="form-upload" style="display: none;"><input type="file" name="file[]"  multiple/></form>');
 
-	$('#form-upload input[name=\'file\']').trigger('click');
-
+	$('#form-upload input[name=\'file[]\']').trigger('click');
+/////////////////////////////////////////RIP modifications: file change to file[] ///////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////  
 	if (typeof timer != 'undefined') {
     	clearInterval(timer);
 	}
 
 	timer = setInterval(function() {
-		if ($('#form-upload input[name=\'file\']').val() != '') {
+		if ($('#form-upload input[name=\'file[]\']').val() != '') {
 			clearInterval(timer);
 
 			$.ajax({
-				url: 'index.php?route=common/filemanager/upload&token=<?php echo $token; ?>&directory=<?php echo $directory; ?>',
+				url: 'index.php?route=common/filemanager/uploadAll&token=<?php echo $token; ?>&directory=<?php echo $directory; ?>',//RIP modifications: end.
 				type: 'post',
 				dataType: 'json',
 				data: new FormData($('#form-upload')[0]),

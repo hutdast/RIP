@@ -14,7 +14,7 @@ class ControllerCatalogProduct extends Controller {
         $this->getList();
     }
 
-     //RIP modifications:
+    //RIP modifications:
     public function add() {
         $this->language->load('catalog/product');
 
@@ -22,34 +22,32 @@ class ControllerCatalogProduct extends Controller {
 
         $this->load->model('catalog/product');
 
-            $this->session->data['success'] = $this->language->get('text_success');
-            if (isset($this->request->get['dimensions']) && isset($this->request->get['size']) || isset($this->request->get['luster']) || 
-                    isset($this->request->get['deep_matte'])) {
-                $url = '';
-                $dbData['dimensions'] = $this->request->get['dimensions'];
-                foreach ($this->model_catalog_product->getCategory() as $category) {
-                    if ($category['dimensions'] == $dbData['dimensions']) {
-                          $dbData['dimensions'] = null;
-                         $url = '&check=~!';
+        $this->session->data['success'] = $this->language->get('text_success');
+        if (isset($this->request->get['dimensions']) && isset($this->request->get['size']) || isset($this->request->get['luster']) ||
+                isset($this->request->get['deep_matte'])) {
+            $url = '';
+            $dbData['dimensions'] = $this->request->get['dimensions'];
+            foreach ($this->model_catalog_product->getCategory() as $category) {
+                if ($category['dimensions'] == $dbData['dimensions']) {
+                    $dbData['dimensions'] = null;
+                    $url = '&check=~!';
                     break;
-                    }
                 }
-                // If dimensions is not null then we can enter it to db
-                if( $dbData['dimensions'] != null){
-                    $dbData['size'] = $this->request->get['size'];
+            }
+            // If dimensions is not null then we can enter it to db
+            if ($dbData['dimensions'] != null) {
+                $dbData['size'] = $this->request->get['size'];
                 $dbData['luster'] = $this->request->get['luster'];
                 $dbData['deep_matte'] = $this->request->get['deep_matte'];
                 $this->model_catalog_product->addCategory($dbData);
-                } 
-                 $this->response->redirect($this->url->link('catalog/product', 'token=' . $this->session->data['token'].$url, 'SSL'));
             }
-
-
-       
+            $this->response->redirect($this->url->link('catalog/product', 'token=' . $this->session->data['token'] . $url, 'SSL'));
+        }
     }
- //RIP modifications:End.
-    
-    
+
+    //RIP modifications:End.
+
+
     public function delete() {
         $this->language->load('catalog/product');
 
@@ -151,21 +149,18 @@ class ControllerCatalogProduct extends Controller {
         if (isset($this->request->get['price_change'])) {
             $dbData['price_change'] = $this->request->get['price_change'];
             $dbData['dimensions'] = $this->request->get['dimensions_edit'];
-            if(isset($this->request->get['luster_edit'])){
+            if (isset($this->request->get['luster_edit'])) {
                 $dbData['luster'] = $this->request->get['luster_edit'];
-            }else if(isset($this->request->get['deep_matte_edit']) ){
+            } else if (isset($this->request->get['deep_matte_edit'])) {
                 $dbData['deep_matte'] = $this->request->get['deep_matte_edit'];
-               
             }
-            
-            $this->model_catalog_product->updateCategory($dbData);
-            
-            $this->session->data['success'] = $this->language->get('text_success');
-            
-           $this->response->redirect($this->url->link('catalog/product', 'token=' . $this->session->data['token'], 'SSL'));
-        }
 
-       
+            $this->model_catalog_product->updateCategory($dbData);
+
+            $this->session->data['success'] = $this->language->get('text_success');
+
+            $this->response->redirect($this->url->link('catalog/product', 'token=' . $this->session->data['token'], 'SSL'));
+        }
     }
 
     //RIP modifications: End.
