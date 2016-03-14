@@ -1,3 +1,77 @@
+.home-bg {
+	background-image: url('../image/bg1.png');
+       background-attachment: fixed;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+}
+
+.aboutus-bg {
+	background: url('../images/bg2.png') no-repeat center center fixed;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+}
+
+.contactus-bg {
+	background: url('../image/bg3.png') no-repeat center center fixed;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+}
+
+.login-bg {
+	background-image:url('../image/bg4.png'); 
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+}
+
+.pricing-bg {
+	background: url('../image/bg5.png') no-repeat center center fixed;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+}
+
+.galleries-bg {
+	background: url('../image/bg6.png') no-repeat center center fixed;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+}
+
+.admin-bg {
+	background: url('../image/bg7.png') no-repeat center center fixed;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+}
+
+.weddings-bg {
+	background: url('../image/bg8.png') no-repeat center center fixed;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+}
+
+.portraits-bg {
+	background: url('../image/bg9.png') no-repeat center center fixed;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+}
+
+
 body {
 	font-family: 'Open Sans', sans-serif;
 	font-weight: 400;
@@ -8,10 +82,7 @@ body {
        
          
 }
-.login-bg{
-    background-color: #00FF00;
-    background-image: url('../image/paypal_express_mobile.png');
-}
+
 
 h1, h2, h3, h4, h5, h6 {
 	color: #444;

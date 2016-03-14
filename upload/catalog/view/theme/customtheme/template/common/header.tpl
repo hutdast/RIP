@@ -3,7 +3,7 @@
 <!--[if IE 8 ]><html dir="<?php echo $direction; ?>" lang="<?php echo $lang; ?>" class="ie8"><![endif]-->
 <!--[if IE 9 ]><html dir="<?php echo $direction; ?>" lang="<?php echo $lang; ?>" class="ie9"><![endif]-->
 <!--[if (gt IE 9)|!(IE)]><!-->
-<html dir="<?php echo $direction; ?>" lang="<?php echo $lang; ?>">
+<html dir="<?php echo $direction; ?>" lang="<?php echo $lang; ?>" class="<?php echo $styleClass; ?>">
 <!--<![endif]-->
 <head>
 <meta charset="UTF-8" />
@@ -45,7 +45,7 @@
     
     <!--   RIP MOFICACTIONS: IF USER IS NOT LOGGED THE CART AND OTHER USER SPECIFIC FUNCTIONS ARE NOT DISPLAYED. IN ADDITION, ALL SUB-FUNCTIONALITIES LAYS OUT TRANSPARENTLY TO THE USER. -->
     
-<body class="<?php echo $class; ?>">
+<body style="background-color:rgba(0, 0, 0, 0.5);">
 <nav id="top">
   <div class="container">
    

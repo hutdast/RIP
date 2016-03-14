@@ -17,6 +17,10 @@ class ControllerCommonDashboard extends Controller {
                      $filenames = scandir($directory); 
                        //Delete after 31 days as soon the admin logs in, this function is triggered
                     if(($date - $dateAdded) > 2741509 ){
+                        $customerID = $customer['customer_id'];
+                        //Disable customer so he/she wont be able to log in
+                        $tempdb['status'] = 0;
+                        $this->model_customer_customer->editCustomer($customerID, $tempdb);
                          foreach ($filenames as $file){
                       if(is_file($directory.'/'.$file)){
                           unlink($directory.'/'.$file);

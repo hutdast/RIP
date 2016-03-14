@@ -61,6 +61,34 @@ class ControllerCommonHeader extends Controller {
         //$data['register'] = $this->url->link('account/register', '', 'SSL');
         
         
+        if(!isset( $this->request->get['route']) || explode("/", (string) $this->request->get['route'])[1] == "home"){
+            
+            $data['styleClass'] = 'home-bg';
+        }else{
+            $styleClass = explode("/", (string) $this->request->get['route']);
+            if($styleClass[1] == 'aboutus' ){
+                $data['styleClass'] = '.aboutus-bg';
+            }else if($styleClass[1] == 'contactus'){
+                $data['styleClass'] = 'contactus-bg';
+            }else if($styleClass[1] == 'login'){
+                $data['styleClass'] = 'login-bg';
+            }else if($styleClass[1] == 'pricing'){
+                $data['styleClass'] = 'pricing-bg';
+            }else if($styleClass[1] == 'galleries'){
+                $data['styleClass'] = 'galleries-bg';
+            }else if($styleClass[1] == 'weddings'){
+                $data['styleClass'] = 'weddings-bg';
+            }else if($styleClass[1] == 'portraits'){
+                $data['styleClass'] = 'portraits-bg';
+            }
+            
+        }
+        
+        
+        
+        
+        
+        
 		$data['text_shopping_cart'] = $this->language->get('text_shopping_cart');
 		$data['text_logged'] = sprintf($this->language->get('text_logged'), $this->url->link('account/account', '', 'SSL'), $this->customer->getFirstName(), $this->url->link('account/logout', '', 'SSL'));
 

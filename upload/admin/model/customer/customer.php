@@ -22,8 +22,20 @@ class ModelCustomerCustomer extends Model {
 		if (!isset($data['custom_field'])) {
 			$data['custom_field'] = array();
 		}
-
-		$this->db->query("UPDATE " . DB_PREFIX . "customer SET customer_group_id = '" . (int)$data['customer_group_id'] . "', firstname = '" . $this->db->escape($data['firstname']) . "', lastname = '" . $this->db->escape($data['lastname']) . "', email = '" . $this->db->escape($data['email']) . "', telephone = '" . $this->db->escape($data['telephone']) . "', fax = '" . $this->db->escape($data['fax']) . "', custom_field = '" . $this->db->escape(isset($data['custom_field']) ? json_encode($data['custom_field']) : '') . "', newsletter = '" . (int)$data['newsletter'] . "', status = '" . (int)$data['status'] . "', approved = '" . (int)$data['approved'] . "', safe = '" . (int)$data['safe'] . "', folder_name = '" . $data['folder_name'] . "'  WHERE customer_id = '" . (int)$customer_id . "'");
+        //RIP modifications: make the editCustomer flexible in order to use in dashboard.php
+        if(isset($data['firstname'])){
+            $this->db->query("UPDATE " . DB_PREFIX . "customer SET customer_group_id = '"
+                             . (int)$data['customer_group_id'] . "', firstname = '" . $this->db->escape($data['firstname'])
+                             . "', lastname = '" . $this->db->escape($data['lastname']) . "', email = '" . $this->db->escape($data['email'])
+                             . "', telephone = '" . $this->db->escape($data['telephone']) . "', fax = '" . $this->db->escape($data['fax'])
+                             . "', custom_field = '" . $this->db->escape(isset($data['custom_field']) ? json_encode($data['custom_field']) : '')
+                             . "', newsletter = '" . (int)$data['newsletter'] . "', status = '" . (int)$data['status'] . "', approved = '"
+                             . (int)$data['approved'] . "', safe = '" . (int)$data['safe'] . "', folder_name = '" . $data['folder_name']
+                             . "'  WHERE customer_id = '" . (int)$customer_id . "'");
+        }elseif (isset($data['status'])) {
+            $this->db->query("UPDATE " . DB_PREFIX . "customer SET status = '" . (int)$data['status'] . "'");
+        }
+        //RIP modifications:End.
 
 		if ($data['password']) {
 			$this->db->query("UPDATE " . DB_PREFIX . "customer SET salt = '" . $this->db->escape($salt = token(9)) . "', password = '" . $this->db->escape(sha1($salt . sha1($salt . sha1($data['password'])))) . "' WHERE customer_id = '" . (int)$customer_id . "'");
