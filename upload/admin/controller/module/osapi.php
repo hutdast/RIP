@@ -73,42 +73,47 @@ class ControllerModuleOsapi extends Controller {
 		$ContactPhone = $this->config->get('config_telephone');
 		$os_link = $os_url . "?servicetype=opencart&c_ApiUrl=" . urlencode(HTTP_CATALOG) . "&c_ApiVersion=" . $this->os_version . "&c_ApiToken=" . urlencode($ak) . "&CompanyName=" . urlencode($CompanyName) . "&ContactName=" . urlencode($ContactName) . "&ContactEmail=" . urlencode($ContactEmail) . "&ContactPhone=" . urlencode($ContactPhone);
 
-                 //$this->db->log($this->os_version);
-               
-                
-		$this->data['configkey'] = base64_encode(json_encode(array('ApiUrl' => HTTP_CATALOG, 'ApiToken' => $ak)));
-		$this->data['os_link'] = $os_link;
-		$this->data['os_version'] = $this->os_version;
-		$this->data['heading_title'] = $this->language->get('heading_title');
-
-		$this->data['breadcrumbs'] = array();
-   		$this->data['breadcrumbs'][] = array(
-       		'text'      => $this->language->get('text_home'),
-			'href'      => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
-      		'separator' => false
-   		);
-               
-   		$this->data['breadcrumbs'][] = array(
-       		'text'      => $this->language->get('text_module'),
-			'href'      => $this->url->link('extension/module', 'token=' . $this->session->data['token'], 'SSL'),
-      		'separator' => ' :: '
-   		);
-   		$this->data['breadcrumbs'][] = array(
-       		'text'      => $this->language->get('heading_title'),
-			'href'      => $this->url->link('module/osapi', 'token=' . $this->session->data['token'], 'SSL'),
-      		'separator' => ' :: '
-   		);
-                
-               
-                $data['header'] = $this->load->controller('common/header');
-		$data['column_left'] = $this->load->controller('common/column_left');
-		$data['footer'] = $this->load->controller('common/footer');
-		$this->children = array(
-			'common/header',
-			'common/footer'
-		);
-		//$this->template = 'module/osapi.tpl';
-		$this->response->setOutput($this->load->view('osapi/osapi.tpl', $data));
+        if (!isset($this->request->get['module_id'])) {
+            $data['action'] = $this->url->link('module/osapi', 'token=' . $this->session->data['token'], 'SSL');
+        } else {
+            $data['action'] = $this->url->link('module/osapi', 'token=' . $this->session->data['token'] . '&module_id=' . $this->request->get['module_id'], 'SSL');
+        }
+        
+        //RIP modifications: Installing Onesaas/Freshbooks
+        
+        $data['cancel'] = $this->url->link('extension/module', 'token=' . $this->session->data['token'], 'SSL');
+        $data['configkey'] = base64_encode(json_encode(array('ApiUrl' => HTTP_CATALOG, 'ApiToken' => $ak)));
+        $data['os_link'] = $os_link;
+        $data['os_version'] = $this->os_version;
+        $data['heading_title'] = $this->language->get('heading_title');
+        
+        $data['breadcrumbs'] = array();
+        $data['breadcrumbs'][] = array(
+                                       'text'      => $this->language->get('text_home'),
+                                       'href'      => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
+                                       'separator' => false
+                                       );
+        
+        $data['breadcrumbs'][] = array(
+                                       'text'      => $this->language->get('text_module'),
+                                       'href'      => $this->url->link('extension/module', 'token=' . $this->session->data['token'], 'SSL'),
+                                       'separator' => ' :: '
+                                       );
+        $data['breadcrumbs'][] = array(
+                                       'text'      => $this->language->get('heading_title'),
+                                       'href'      => $this->url->link('module/osapi', 'token=' . $this->session->data['token'], 'SSL'),
+                                       'separator' => ' :: '
+                                       );
+        
+        
+        $data['header'] = $this->load->controller('common/header');
+        $data['column_left'] = $this->load->controller('common/column_left');
+        $data['footer'] = $this->load->controller('common/footer');
+        $this->children = array(
+                                'common/header',
+                                'common/footer'
+                                );
+               $this->response->setOutput($this->load->view('module/osapi.tpl', $data));
 	}
 }
 ?>
