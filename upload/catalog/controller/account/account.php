@@ -99,8 +99,14 @@ class ControllerAccountAccount extends Controller {
             //if the file is not hidden get the the URI
             if (substr($image, 0, 1) != '.') {
                 //Once we get certified the config.php needs to be modified.
+                $modify_image = new Image( DIR_IMAGE."catalog/" . $folder . "/" . $image);
+                $modify_image->resize(190, 107);
+                $mark = new Image(DIR_IMAGE. "logo.png");
+                
+                $modify_image->watermark($mark);
+                $modify_image->save($modify_image->getFile());
                 $img_links[$counting] = HTTPS_SERVER . "/image/catalog/" . $folder . "/" . $image;
-                $counting++;
+                $counting++;               
             }
         }
         return $img_links;
