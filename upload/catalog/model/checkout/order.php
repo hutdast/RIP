@@ -2,6 +2,11 @@
     
     class ModelCheckoutOrder extends Model {
         
+        public function freshbooks($param) {
+            $result = $this->db->query("SELECT * FROM `" . DB_PREFIX . "freshbooks_request` WHERE name = '".$this->db->escape($param)."'");
+            return  $result->row;
+        }
+        
         public function addOrder($data) {
             $this->event->trigger('pre.order.add', $data);
             
@@ -20,25 +25,7 @@
                     
                     $order_product_id = $this->db->getLastId();
                     
-                    foreach ($product['option'] as $option) {
-                        $this->db->query("INSERT INTO " . DB_PREFIX . "order_option SET order_id = '" . (int) $order_id . "', order_product_id = '" . (int) $order_product_id . "', product_option_id = '" . (int) $option['product_option_id'] . "', product_option_value_id = '" . (int) $option['product_option_value_id'] . "', name = '" . $this->db->escape($option['name']) . "', `value` = '" . $this->db->escape($option['value']) . "', `type` = '" . $this->db->escape($option['type']) . "'");
-                    }
-                }
-            }
-            
-            // Gift Voucher
-            $this->load->model('total/voucher');
-            
-            // Vouchers
-            if (isset($data['vouchers'])) {
-                foreach ($data['vouchers'] as $voucher) {
-                    $this->db->query("INSERT INTO " . DB_PREFIX . "order_voucher SET order_id = '" . (int) $order_id . "', description = '" . $this->db->escape($voucher['description']) . "', code = '" . $this->db->escape($voucher['code']) . "', from_name = '" . $this->db->escape($voucher['from_name']) . "', from_email = '" . $this->db->escape($voucher['from_email']) . "', to_name = '" . $this->db->escape($voucher['to_name']) . "', to_email = '" . $this->db->escape($voucher['to_email']) . "', voucher_theme_id = '" . (int) $voucher['voucher_theme_id'] . "', message = '" . $this->db->escape($voucher['message']) . "', amount = '" . (float) $voucher['amount'] . "'");
                     
-                    $order_voucher_id = $this->db->getLastId();
-                    
-                    $voucher_id = $this->model_total_voucher->addVoucher($order_id, $voucher);
-                    
-                    $this->db->query("UPDATE " . DB_PREFIX . "order_voucher SET voucher_id = '" . (int) $voucher_id . "' WHERE order_voucher_id = '" . (int) $order_voucher_id . "'");
                 }
             }
             

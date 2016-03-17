@@ -61,6 +61,30 @@
                 $data['payment_address_custom_field'] = array();
             }
             
+            //Start the request for creating a freshbook client using the billing info shipping info will be part of the invoice creation
+            $poststring = '<?xml version="1.0" encoding="utf-8"?><request method="client.list"><email>'.$this->customer->getEmail().'</email></request> ';
+$curl = curl_init();
+curl_setopt($curl, CURLOPT_URL, "https://asu-receivables.freshbooks.com/api/2.1/xml-in");
+curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+curl_setopt($curl, CURLOPT_TIMEOUT, 40);
+curl_setopt($curl, CURLOPT_POSTFIELDS, $poststring);
+curl_setopt($curl, CURLOPT_USERPWD, "0d2247acc410b0e26fad2de3cf157b42:X");
+curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+$result = curl_exec($curl);
+$errmsg = curl_error($curl);
+$cInfo = curl_getinfo($curl);
+curl_close($curl);
+$response = json_decode(json_encode(simplexml_load_string($result)), true);
+
+
+//If response is ok there is a connection else we have to let customer know
+
+if ($response['@attributes']['status'] == 'ok') {
+    $this->customer->setCustomField($response['clients']['client']['client_id']);
+}
+
+
+
             if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/checkout/payment_address.tpl')) {
                 $this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/checkout/payment_address.tpl', $data));
             } else {
@@ -96,6 +120,7 @@
                 }
             }
             
+            $order_data = array();
             if (!$json) {
                 if (isset($this->request->post['payment_address']) && $this->request->post['payment_address'] == 'existing') {
                     $this->load->model('account/address');
@@ -110,10 +135,25 @@
                         // Default Payment Address
                         $this->load->model('account/address');
                         
-                        $this->session->data['payment_address'] = $this->model_account_address->getAddress($this->request->post['address_id']);
-                        
+                        $addres_arr = $this->model_account_address->getAddress($this->request->post['address_id']);
+                        $this->session->data['payment_address'] = $addres_arr;
                         unset($this->session->data['payment_method']);
                         unset($this->session->data['payment_methods']);
+                        
+                        $order_data = array(
+                                            'firstname' => $addres_arr['firstname'],
+                                            'lastname' => $addres_arr['lastname'],
+                                            'payment_company' => $this->customer->getFolderName(),
+                                            'email' => $this->customer->getEmail(),
+                                            'telephone' => $this->customer->getTelephone(),
+                                            'payment_address_1' => $addres_arr['address_1'],
+                                            'payment_address_2' => $addres_arr['address_2'],
+                                            'payment_city' => $addres_arr['city'],
+                                            'payment_zone' => $addres_arr['zone'],
+                                            'shipping_country' => $addres_arr['country'],
+                                            'payment_postcode' => $addres_arr['zone_code']
+                                            );
+                        
                     }
                 } else {
                     if ((utf8_strlen(trim($this->request->post['firstname'])) < 1) || (utf8_strlen(trim($this->request->post['firstname'])) > 32)) {
@@ -162,10 +202,29 @@
                     if (!$json) {
                         // Default Payment Address
                         $this->load->model('account/address');
-                        
                         $address_id = $this->model_account_address->addAddress($this->request->post);
+                        $addres_arr = $this->model_account_address->getAddress($address_id);
+                        $this->session->data['payment_address'] = $addres_arr;
                         
-                        $this->session->data['payment_address'] = $this->model_account_address->getAddress($address_id);
+                        //RIP modifications:Start accumulating data
+                        //RIP modifications:Adding the customer to formulate a client for Freshbooks request
+                        
+                        
+                        
+                        $order_data = array(
+                                            'firstname' => $addres_arr['firstname'],
+                                            'lastname' => $addres_arr['lastname'],
+                                            'payment_company' => $this->customer->getFolderName(),
+                                            'email' => $this->customer->getEmail(),
+                                            'telephone' => $this->customer->getTelephone(),
+                                            'payment_address_1' => $addres_arr['address_1'],
+                                            'payment_address_2' => $addres_arr['address_2'],
+                                            'payment_city' => $addres_arr['city'],
+                                            'payment_zone' => $addres_arr['zone'],
+                                            'shipping_country' => $addres_arr['country'],
+                                            'payment_postcode' => $addres_arr['zone_code']
+                                            );
+
                         
                         unset($this->session->data['payment_method']);
                         unset($this->session->data['payment_methods']);
@@ -180,6 +239,46 @@
                         $this->model_account_activity->addActivity('address_add', $activity_data);
                     }
                 }
+            }
+            
+            $this->load->model('checkout/order');
+            $client_info = array((int) $this->customer->getCustomField(), $order_data['firstname'], $order_data['lastname'], $order_data['payment_company'], $order_data['email'],
+                                 'password', $order_data['email'], $order_data['telephone'], $order_data['payment_address_1'], $order_data['payment_address_2'],
+                                 $order_data['payment_city'], $order_data['payment_zone'], $order_data['shipping_country'], $order_data['payment_postcode']);
+            
+            $poststring = '';
+            $client_request = explode("~!", $this->model_checkout_order->freshbooks('client_update')['request']);
+            $client_info_index = 0;
+            foreach ($client_request as $request_value) {
+                $poststring .= $request_value;
+                if ($client_info_index < count($client_info)) {
+                    $poststring .= $client_info[$client_info_index];
+                }
+                
+                $client_info_index++;
+            }
+            
+            
+            //Start the request for creating a freshbook client using the billing info shipping info will be part of the invoice creation
+            
+            $curl = curl_init();
+            curl_setopt($curl, CURLOPT_URL, "https://asu-receivables.freshbooks.com/api/2.1/xml-in");
+            curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+            curl_setopt($curl, CURLOPT_TIMEOUT, 40);
+            curl_setopt($curl, CURLOPT_POSTFIELDS, $poststring);
+            curl_setopt($curl, CURLOPT_USERPWD, "0d2247acc410b0e26fad2de3cf157b42:X");
+            curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+            $result = curl_exec($curl);
+            $errmsg = curl_error($curl);
+            $cInfo = curl_getinfo($curl);
+            curl_close($curl);
+            $response = json_decode(json_encode(simplexml_load_string($result)), true);
+            
+            
+            //If response is ok there is a connection else we have to let customer know
+            
+            if ($response['@attributes']['status'] != 'ok') {
+                $json['error']['connection'] = 'Connection problem, please try again! ';
             }
             
             $this->response->addHeader('Content-Type: application/json');
