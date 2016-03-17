@@ -2,40 +2,41 @@
 RIP is a team of two [Armstrong State University](https://www.armstrong.edu) students: Charles Poole (designer) and Nikenson Midi (developer).
 
 **** RIP Modifications *****
+
 IT IS VERY IMPORTANT THAT MOST OPENCART RECOMMENDATIONS SHOULD BE IGNORED AS THIS SOFTWARE IS DIRECTLY MODIFIED.
 
 
 RIP developers and designers are undergraduate students from Armstrong State University at the time of the construction of this application. Jan 12, 2016 thru May 6, 2016
 
 The following files were modified in order to accomodate business needs:
-Admin/catalog/checkout/cart => link rerouting 
-Admin/model/customer/customer => edit and add functions were added and the rest of the file edited
-Admin/language/customer/customer
-Admin/controller/customer/customer => entry to capture the uploaded files and the name of the foldername for database purpose. 
-Admin/view/template/customerform.tpl => reflect the efect of the entry above
-Admin/controller/catalog/product => new interface for the product entries
-Admin/model/catalog/product => => add new queries to support its controller counterpart
-Admin/controller/catalog/category => New interface for the category section to integrate the packages
-Admin/model/catalog/category 
-Admin/common/menu => changing the ling for the left side column in administration 
-Admin/controller/common/filemanager => multiple file uploaded enabled
-Admin/view/template/common/filemanager => multiple file uploaded enabled
+- Admin/catalog/checkout/cart => link rerouting 
+- Admin/model/customer/customer => edit and add functions were added and the rest of the file edited
+- Admin/language/customer/customer
+- Admin/controller/customer/customer => entry to capture the uploaded files and the name of the foldername for database purpose. 
+- Admin/view/template/customerform.tpl => reflect the efect of the entry above
+- Admin/controller/catalog/product => new interface for the product entries
+- Admin/model/catalog/product => => add new queries to support its controller counterpart
+- Admin/controller/catalog/category => New interface for the category section to integrate the packages
+- Admin/model/catalog/category 
+- Admin/common/menu => changing the ling for the left side column in administration 
+- Admin/controller/common/filemanager => multiple file uploaded enabled
+- Admin/view/template/common/filemanager => multiple file uploaded enabled
 
-Catalog/account/home 
-Catalog/account/login
-Catalog/view/template/customtheme folder is created.
-Catalog/view/javascript/common.js => cart > add was modified to two parameters
-Catalog/controller/checkout/cart => cart modifications
-Catalog/system/library/cart => cart modifications
-Catalog/model/checout/cart => cart query
+- Catalog/account/home 
+- Catalog/account/login
+- Catalog/view/template/customtheme folder is created.
+- Catalog/view/javascript/common.js => cart > add was modified to two parameters
+- Catalog/controller/checkout/cart => cart modifications
+- Catalog/system/library/cart => cart modifications
+- Catalog/model/checout/cart => cart query
 
 
 
 DATABASE MODIFICATION:
-table apackage was added => collecting the diffrent packages as they are unique to the business
-table customer was modified
-table product was rearranged completly => So the client can be the one create the product that way not every picture is a product.
-table cart in order to capture picture's route as picture name and the id
+- table apackage was added => collecting the diffrent packages as they are unique to the business
+- table customer was modified
+- table product was rearranged completly => So the client can be the one create the product that way not every picture is a product.
+- table cart in order to capture picture's route as picture name and the id
 
 **** RIP Modifications end. *****
 
