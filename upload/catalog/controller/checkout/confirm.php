@@ -321,6 +321,42 @@
                                               );
                 }
                 
+                //RIP modifications:Adding the customer to formulate a client for Freshbooks request
+                $client_info = array($order_data['firstname'], $order_data['lastname'], $order_data['payment_company'], $order_data['email'], $order_data['email'],
+                                     'password', $order_data['email'], $order_data['telephone'], $order_data['payment_address_1'], $order_data['payment_address_2'],
+                                     $order_data['payment_city'], $order_data['payment_zone'], $order_data['shipping_country'], $order_data['payment_postcode']);
+                
+                $poststring = '';
+                $client_request = explode("~!", $this->model_checkout_order->freshbooks('client')['request']);
+                $client_info_index = 0;
+                foreach ($client_request as $request_value) {
+                    $poststring .= $request_value;
+                    if ($client_info_index < count($client_info)) {
+                        $poststring .= $client_info[$client_info_index];
+                    }
+                    
+                    $client_info_index++;
+                }
+                $this->db->log($poststring);
+                //Start the request for creating a client
+                $curl = curl_init();
+                curl_setopt($curl, CURLOPT_URL, "https://asu-receivables.freshbooks.com/api/2.1/xml-in");
+                curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1); // return into a variable
+                curl_setopt($curl, CURLOPT_TIMEOUT, 40); // times out after 40s
+                curl_setopt($curl, CURLOPT_POSTFIELDS, $poststring); // add POST fields
+                curl_setopt($curl, CURLOPT_USERPWD, "0d2247acc410b0e26fad2de3cf157b42:X");
+                curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+                $result = curl_exec($curl);
+                curl_close($curl);
+                $response = json_decode(json_encode(simplexml_load_string($result)), true);
+                $response['client_id'];
+                $this->customer->setCutomField($response['client_id']);
+                
+                
+                
+                
+                
+                
                 $data['payment'] = $this->load->controller('payment/' . $this->session->data['payment_method']);
             } else {
                 $data['redirect'] = $redirect;

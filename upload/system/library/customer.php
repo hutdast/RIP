@@ -147,4 +147,10 @@ class Customer {
 
 		return $query->row['total'];
 	}
+    //RIP modifications: Adding any misc info pertaining to the user
+    public function setCustomField($param) {
+        $this->db->query("INSERT INTO " . DB_PREFIX . "customer SET custom_field = '" . $this->db->escape($param) . "'");
+    
+        
+    }
 }
