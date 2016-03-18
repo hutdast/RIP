@@ -10,43 +10,49 @@
     <?php if ($success) { ?>
     <div class="alert alert-success"><i class="fa fa-check-circle"></i> <?php echo  $success; ?> </div>
     <?php } ?>
-    <div class="row"><?php echo $column_right; ?>
+   <div class="row">
 
-
-      
         <!-- RIP modifications: -->
         <?php foreach($pictures as $pic){ ?> 
-        <div class="product-layout col-lg-3 col-md-3 col-sm-6 col-xs-12">
+        <div class="product-layout col-lg-3 col-md-3 col-sm-6 col-xs-12" >
             <div class="product-thumb transition">
-                <div class="image"  ><img src="<?php echo $pic; ?>"  class="img-responsive photo-size"  style="width: 300px;height:115px;" ></div>
+                <div class="thumbnails"  ><img src="<?php echo $pic; ?>"  class="img-responsive photo-size"  style="width: 300px;height:115px;" 
+                                               data-toggle="tooltip" data-title="Click image to enlarge" ></div>
+                <div class="button-group" > 
+                     <button  type="button" data-toggle="tooltip" onclick="wishlist.add('<?php echo $pic; ?>');" data-title="Add to Wish List">WishList</button>
 
-                <div class="button-group" >
-
-
-                    <!-- Check which one of those pics are already in the cart therefore viewed -->
+                    <button type="button"  id="<?php echo $pic; ?>" class="createProduct" data-toggle="tooltip" data-title="Select Options"><i class="fa fa-shopping-cart"></i></button>
+           
+                      <!-- Check which one of those pics are already in the cart therefore viewed -->
                     <?php foreach($cart_products as $productName){ ?>
                     <?php if($pic == $productName['name']){ ?> 
                     <i class="fa fa-check-circle "  style="color: blue;">Cart</i> 
 
-
                     <?php break; } ?>
                     <?php }?>
                     <!-- Check which one of those pics are already in the cart therefore viewed  ENd.-->
+                      <!-- Check which one of those pics are already in the wishlist  -->
+                    <?php foreach($wishlist as $wish){ ?>
+                    <?php if($pic == $wish['product_name']){ ?> 
+                    
+                    <i class="fa fa-heart" style="color: red;"></i>
 
-                    <button type="button" id="<?php echo $pic; ?>" class="createProduct"><i class="fa fa-shopping-cart"></i> <span class="hidden-xs hidden-sm hidden-md">Select</span></button>
-                    <button type="button" data-toggle="tooltip" onclick="wishlist.add('43');" data-original-title="Add to Wish List"><i class="fa fa-heart"></i></button>
-
+                    <?php break; } ?>
+                    <?php }?>
+                    <!-- Wish List  ENd.-->
+                    
                 </div>
-
+ 
+                    
             </div>
         </div>
-        <!--<img src=""  style="width:304px;height:228px;">-->
+        
         <?php } ?>
     </div>
 </div>
 
 
-<div class="well create-product" style="display:none;">
+<div class="well create-product" style="display:none;"  data-toggle="tooltip" data-title="Select your preferences - scroll down for more options">
     <div class="row"><!--Row header Begins -->
         <div class="col-sm-3">
             <label class="control-label" >Dimensions</label>
@@ -166,7 +172,7 @@
     $(".create-product").dialog({
             
 
-    title: "Select your preferences (scroll down for more options)",
+    title: "Cart",
             width: 500,
             height: 240,
             buttons: {
@@ -204,8 +210,8 @@
     open: function () {
     $("#full-figure").attr('src', src);
     },
-            width: 500,
-            height: 450,
+            width: $( window ).width() * 0.5,
+            height:$( window ).height()* 0.7,
             position: { my: "left top", at: "left top", of: window }
     });
     });

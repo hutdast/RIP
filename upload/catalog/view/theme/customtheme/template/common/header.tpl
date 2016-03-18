@@ -60,16 +60,18 @@
           <ul class="dropdown-menu dropdown-menu-right">
            
             <li><a href="<?php echo $account; ?>"><?php echo $text_account; ?></a></li>
+            <li><a href="<?php echo $account_edit; ?>">Edit Account</a></li>
+            <li><a href="<?php echo $account_pass; ?>">Edit Password</a></li>
+            <li><a href="<?php echo $account_add_address; ?>">Edit Address</a></li>
             <li><a href="<?php echo $order; ?>"><?php echo $text_order; ?></a></li>
             <li><a href="<?php echo $transaction; ?>"><?php echo $text_transaction; ?></a></li>
-            <li><a href="<?php echo $download; ?>"><?php echo $text_download; ?></a></li>
+            
             <li><a href="<?php echo $logout; ?>"><?php echo $text_logout; ?></a></li>
            
           </ul>
         </li>
           
-        <li><a href="<?php echo $wishlist; ?>" id="wishlist-total" title="<?php echo $text_wishlist; ?>"><i class="fa fa-heart"></i> <span class="hidden-xs hidden-sm hidden-md"><?php echo $text_wishlist; ?></span></a></li>
-          
+ <li><i class="fa fa-heart"></i> <span class="hidden-xs hidden-sm hidden-md"><?php echo $text_wishlist; ?></span></li>          
           
         <li><a href="<?php echo $shopping_cart; ?>" title="<?php echo $text_shopping_cart; ?>"><i class="fa fa-shopping-cart"></i> <span class="hidden-xs hidden-sm hidden-md"><?php echo $text_shopping_cart; ?></span></a></li>
           
@@ -84,6 +86,7 @@
 </nav>
     
 <header>
+  
   <div class="container">
     <div class="row">
       <div class="col-sm-4">
@@ -93,7 +96,7 @@
           <a href="<?php echo $home; ?>"><img src="<?php echo $logo; ?>" title="<?php echo $name; ?>" alt="<?php echo $name; ?>" class="img-responsive" /></a>
          
           <?php } else { ?>
-          
+         
           <h1><a href="<?php echo $home; ?>"><?php echo $name; ?> </a></h1>
           <?php } ?>
         </div>

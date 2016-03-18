@@ -108,6 +108,9 @@ class ControllerCommonHeader extends Controller {
         //Check if user is logged to evaluate which view to show
 		$data['logged'] = $this->customer->isLogged();
 		$data['account'] = $this->url->link('account/account', '', 'SSL');
+                $data['account_edit'] = $this->url->link('account/edit', '', 'SSL');
+                $data['account_pass'] = $this->url->link('account/password', '', 'SSL');
+                $data['account_add_address'] = $this->url->link('account/address', '', 'SSL');
 		
 		$data['login'] = $this->url->link('account/login', '', 'SSL');
 		$data['order'] = $this->url->link('account/order', '', 'SSL');

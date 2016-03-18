@@ -68,7 +68,8 @@ class ControllerAccountAccount extends Controller {
         $data['pictures'] = $this->readFolder();
         $data['categories'] = $this->model_catalog_product->getCategory();
         $data['cart_products'] = $this->cart->getProducts();
-
+        $this->load->model('account/wishlist');
+        $data['wishlist'] = $this->model_account_wishlist->getWishlist();
 
 
 
