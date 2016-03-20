@@ -66,21 +66,21 @@ class ControllerCommonHeader extends Controller {
             $data['styleClass'] = 'home-bg';
         }else{
             $styleClass = explode("/", (string) $this->request->get['route']);
-            if($styleClass[1] == 'aboutus' ){
-                $data['styleClass'] = '.aboutus-bg';
-            }else if($styleClass[1] == 'contactus'){
-                $data['styleClass'] = 'contactus-bg';
-            }else if($styleClass[1] == 'login'){
-                $data['styleClass'] = 'login-bg';
-            }else if($styleClass[1] == 'pricing'){
-                $data['styleClass'] = 'pricing-bg';
-            }else if($styleClass[1] == 'galleries'){
-                $data['styleClass'] = 'galleries-bg';
-            }else if($styleClass[1] == 'weddings'){
-                $data['styleClass'] = 'weddings-bg';
-            }else if($styleClass[1] == 'portraits'){
-                $data['styleClass'] = 'portraits-bg';
-            }
+                    if($styleClass[1] == 'information' ){
+                        $data['styleClass'] = 'aboutus-bg';
+                    }else if($styleClass[1] == 'contact'){
+                        $data['styleClass'] = 'contactus-bg'; 
+                    }else if($styleClass[1] == 'login'){
+                        $data['styleClass'] = 'login-bg'; 
+                    }else if($styleClass[1] == 'pricing'){
+                        $data['styleClass'] = 'pricing-bg'; 
+                    }else if($styleClass[1] == 'account'){
+                        $data['styleClass'] = 'galleries-bg'; 
+                    }else if($styleClass[1] == 'weddings'){
+                        $data['styleClass'] = 'weddings-bg'; 
+                    }else if($styleClass[1] == 'portraits'){
+                        $data['styleClass'] = 'portraits-bg'; 
+                    }
             
         }
         

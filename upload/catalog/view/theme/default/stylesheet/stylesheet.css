@@ -8,7 +8,8 @@
 }
 
 .aboutus-bg {
-	background: url('../images/bg2.png') no-repeat center center fixed;
+	background: url('../image/bg2.png') ;
+        background-attachment: fixed;
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
 	-o-background-size: cover;
@@ -16,7 +17,8 @@
 }
 
 .contactus-bg {
-	background: url('../image/bg3.png') no-repeat center center fixed;
+	background: url('../image/bg3.png') ;
+        background-attachment: fixed;
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
 	-o-background-size: cover;
@@ -25,6 +27,7 @@
 
 .login-bg {
 	background-image:url('../image/bg4.png'); 
+        background-attachment: fixed;
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
 	-o-background-size: cover;
@@ -32,7 +35,8 @@
 }
 
 .pricing-bg {
-	background: url('../image/bg5.png') no-repeat center center fixed;
+	background: url('../image/bg5.png') ;
+        background-attachment: fixed;
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
 	-o-background-size: cover;
@@ -40,7 +44,8 @@
 }
 
 .galleries-bg {
-	background: url('../image/bg6.png') no-repeat center center fixed;
+	background: url('../image/bg6.png') ;
+        background-attachment: fixed;
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
 	-o-background-size: cover;
@@ -48,7 +53,8 @@
 }
 
 .admin-bg {
-	background: url('../image/bg7.png') no-repeat center center fixed;
+	background: url('../image/bg7.png') ;
+        background-attachment: fixed;
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
 	-o-background-size: cover;
@@ -56,7 +62,8 @@
 }
 
 .weddings-bg {
-	background: url('../image/bg8.png') no-repeat center center fixed;
+	background: url('../image/bg8.png') ;
+        background-attachment: fixed;
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
 	-o-background-size: cover;
@@ -64,15 +71,16 @@
 }
 
 .portraits-bg {
-	background: url('../image/bg9.png') no-repeat center center fixed;
+	background: url('../image/bg9.png') ;
+        background-attachment: fixed;
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
 	-o-background-size: cover;
 	background-size: cover;
 }
 
-
 body {
+      
 	font-family: 'Open Sans', sans-serif;
 	font-weight: 400;
 	color: #666;
@@ -387,7 +395,6 @@ div.required .control-label:before {
 }
 /* footer */
 footer {
-	margin-top: 30px;
 	padding-top: 30px;
 	background-color: #303030;
 	border-top: 1px solid #ddd;
@@ -413,6 +420,7 @@ footer h5 {
 .alert {
 	padding: 8px 14px 8px 14px;
 }
+
 /* breadcrumb */
 .breadcrumb {
 	margin: 0 0 20px 0;
@@ -618,6 +626,11 @@ footer h5 {
 .product-grid .product-thumb .image {
 	float: none;
 }
+@media (min-height: 768px ){
+    footer{
+        margin-top: 700px;
+    }
+}
 @media (min-width: 767px) {
 .product-list .product-thumb .image {
 	float: left;
@@ -725,6 +738,10 @@ h2.price {
 	.product-thumb .button-group button, .product-thumb .button-group button + button {
 		width: 33.33%;
 	}
+        .pull-center{
+        margin-left: 800px;
+        padding-bottom: 10px;
+    }
 }
 @media (max-width: 767px) {
 	.product-thumb .button-group button, .product-thumb .button-group button + button {
@@ -778,6 +795,7 @@ h2.price {
 	#content .col-md-6:nth-child(2n+1) {
 		clear:left;
 	}
+        
 }
 @media (min-width: 768px) and (max-width: 991px) {
 	#content .col-sm-2:nth-child(6n+1),
@@ -787,6 +805,7 @@ h2.price {
 	#content .col-sm-6:nth-child(2n+1) {
 		clear:left;
 	}
+        
 }
 
 /* fixed colum left + content + right*/
@@ -806,6 +825,11 @@ h2.price {
     #content + #column-right .product-layout .col-md-3 {
        width: 100%;
     }
+    .pull-center{
+        margin-left: 500px;
+        padding-bottom: 10px;
+    }
+   
 }
 
 /* fixed product layouts used in left and right columns */
@@ -816,6 +840,7 @@ h2.price {
 /* fixed mobile cart quantity input */
 .input-group .form-control[name^=quantity] {
 	min-width: 50px;
+       
 }
 
 /* Missing focus and border color to overwrite bootstrap */
@@ -823,3 +848,37 @@ h2.price {
     background-image: none;
     background-color: #df5c39;
 }
+
+@media only screen 
+and (min-device-width : 768px) 
+and (max-device-width : 1024px)
+and (orientation : landscape)
+{
+    .pull-center{
+        margin-left: 605px;
+        padding-bottom: 10px;
+    }
+}
+@media only screen 
+and (min-device-width : 768px) 
+and (max-device-width : 1024px) 
+and (orientation : portrait)
+{ 
+.pull-center{
+        margin-left: 500px;
+        padding-bottom: 10px;
+    }
+}
+@media (max-width: 768px) {
+    .pull-center{
+        margin-left: 155px;
+        padding-bottom: 10px;
+    }
+   
+}
+
+ .dialog-class .ui-widget-header  {
+background: blue;
+	
+}
+

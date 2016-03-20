@@ -18,14 +18,16 @@
 <meta name="keywords" content= "<?php echo $keywords; ?>" />
 <?php } ?>
 <script src="catalog/view/javascript/jquery/jquery-2.1.1.min.js" type="text/javascript"></script>
-<link href="catalog/view/javascript/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen" />
+<script type="text/javascript" src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<script src="catalog/view/javascript/jquery/owl-carousel/owl.carousel.min.js" type="text/javascript"></script>
 <script src="catalog/view/javascript/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
 <link href="catalog/view/javascript/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
-<link href="//fonts.googleapis.com/css?family=Open+Sans:400,400i,300,700" rel="stylesheet" type="text/css" />
 <link href="catalog/view/theme/default/stylesheet/stylesheet.css" rel="stylesheet">
-<!--RIP modification: adding the jquery user interface for dialog-->
-  <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
-   <script type="text/javascript" src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<link href="//fonts.googleapis.com/css?family=Open+Sans:400,400i,300,700" rel="stylesheet" type="text/css"/>
+<link rel="stylesheet" href="catalog/view/javascript/jquery/owl-carousel/owl.carousel.css">
+<link rel="stylesheet" href="catalog/view/javascript/jquery/owl-carousel/owl.theme.css">
+<link rel="stylesheet" href="catalog/view/javascript/jquery/owl-carousel/owl.transitions.css">
+<link href="catalog/view/javascript/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen" />
  <!--RIP modification: adding the jquery user interface for dialog Ends.-->
 
 <?php foreach ($styles as $style) { ?>
@@ -60,9 +62,10 @@
           <ul class="dropdown-menu dropdown-menu-right">
            
             <li><a href="<?php echo $account; ?>"><?php echo $text_account; ?></a></li>
-            <li><a href="<?php echo $account_edit; ?>">Edit Account</a></li>
+              <li><a href="<?php echo $account_edit; ?>">Edit Account</a></li>
             <li><a href="<?php echo $account_pass; ?>">Edit Password</a></li>
             <li><a href="<?php echo $account_add_address; ?>">Edit Address</a></li>
+           
             <li><a href="<?php echo $order; ?>"><?php echo $text_order; ?></a></li>
             <li><a href="<?php echo $transaction; ?>"><?php echo $text_transaction; ?></a></li>
             

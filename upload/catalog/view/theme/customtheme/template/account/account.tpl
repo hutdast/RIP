@@ -10,45 +10,100 @@
     <?php if ($success) { ?>
     <div class="alert alert-success"><i class="fa fa-check-circle"></i> <?php echo  $success; ?> </div>
     <?php } ?>
-   <div class="row">
-
+  <div class="button-group pull-center" ><!-- Changing the view from ro to carousel -->
+        <button type="button" class="btn-primary" onclick="changeView();"   data-toggle="tooltip" data-title="Click to change from rows to carousel view">Change View</button>
+    </div><!-- Changing the view from ro to carousel end.-->
+ 
+     <div  class="row " ><!-- Row displays begins -->
         <!-- RIP modifications: -->
         <?php foreach($pictures as $pic){ ?> 
-        <div class="product-layout col-lg-3 col-md-3 col-sm-6 col-xs-12" >
-            <div class="product-thumb transition">
-                <div class="thumbnails"  ><img src="<?php echo $pic; ?>"  class="img-responsive photo-size"  style="width: 300px;height:115px;" 
+        <div class="product-layout col-lg-3 col-md-3 col-sm-6 col-xs-12 " >
+            <div class="product-thumb transition ">
+                <div class="image"  ><img src="<?php echo $pic; ?>"  class="img-responsive photo-size"  style="width: 300px;height:115px;" 
                                                data-toggle="tooltip" data-title="Click image to enlarge" ></div>
-                <div class="button-group" > 
-                     <button  type="button" data-toggle="tooltip" onclick="wishlist.add('<?php echo $pic; ?>');" data-title="Add to Wish List">WishList</button>
 
-                    <button type="button"  id="<?php echo $pic; ?>" class="createProduct" data-toggle="tooltip" data-title="Select Options"><i class="fa fa-shopping-cart"></i></button>
-           
+                <div > 
+
+                     <button  type="button" class="btn-primary" data-toggle="tooltip" onclick="wishlist.add('<?php echo $pic; ?>');" data-title="Add to Wish List">WishList</button>
+                    <button type="button" class="btn-primary"  id="<?php echo $pic; ?>" class="createProduct" data-toggle="tooltip" data-title="Select Options"><i class="fa fa-shopping-cart"></i></button>
+
                       <!-- Check which one of those pics are already in the cart therefore viewed -->
+
                     <?php foreach($cart_products as $productName){ ?>
+
                     <?php if($pic == $productName['name']){ ?> 
+
                     <i class="fa fa-check-circle "  style="color: blue;">Cart</i> 
 
                     <?php break; } ?>
+
                     <?php }?>
                     <!-- Check which one of those pics are already in the cart therefore viewed  ENd.-->
                       <!-- Check which one of those pics are already in the wishlist  -->
                     <?php foreach($wishlist as $wish){ ?>
                     <?php if($pic == $wish['product_name']){ ?> 
-                    
                     <i class="fa fa-heart" style="color: red;"></i>
+                    <?php break; } ?>
+
+                    <?php }?>
+
+                    <!-- Wish List  ENd.-->
+                </div>
+
+            </div>
+
+        </div>
+        <?php } ?>
+       
+    </div><!-- Row displays ends. -->
+    
+    <div class="owl-carousel" ><!--Carousel displays begins. -->
+         <?php foreach($pictures as $pic){ ?> 
+         <div  class="owl-lazy" data-src="<?php echo $pic; ?>" >
+            <div class="product-thumb transition">
+                <div class="pull-center"><img src="<?php echo $pic; ?>"  class="img-responsive photo-size"    
+                                               data-toggle="tooltip" data-title="Click image to enlarge" ></div>
+
+                <div class="pull-center" > 
+
+                     <button  type="button" class="btn-primary" data-toggle="tooltip" onclick="wishlist.add('<?php echo $pic; ?>');" data-title="Add to Wish List">WishList</button>
+                    <button type="button" class="btn-primary"  id="<?php echo $pic; ?>" class="createProduct" data-toggle="tooltip" data-title="Select Options"><i class="fa fa-shopping-cart"></i></button>
+
+                      <!-- Check which one of those pics are already in the cart therefore viewed -->
+
+                    <?php foreach($cart_products as $productName){ ?>
+
+                    <?php if($pic == $productName['name']){ ?> 
+
+                    <i class="fa fa-check-circle "  style="color: blue;">Cart</i> 
 
                     <?php break; } ?>
+
                     <?php }?>
+                    <!-- Check which one of those pics are already in the cart therefore viewed  ENd.-->
+                      <!-- Check which one of those pics are already in the wishlist  -->
+                    <?php foreach($wishlist as $wish){ ?>
+                    <?php if($pic == $wish['product_name']){ ?> 
+                    <i class="fa fa-heart" style="color: red;"></i>
+                    <?php break; } ?>
+
+                    <?php }?>
+
                     <!-- Wish List  ENd.-->
-                    
                 </div>
- 
-                    
+
             </div>
-        </div>
-        
+
+         </div>
         <?php } ?>
-    </div>
+        
+        
+    </div><!--Carousel displays ends. -->
+
+
+  
+    
+    
 </div>
 
 
@@ -103,7 +158,13 @@
 
 </div>
 
-<div id="photo-display" style="display:none;"><img src="" id="full-figure" style="width: 500px; height: 450px;" /> </div>
+<div id="photo-display" style="display:none;">
+    <img src="" id="full-figure" />
+    <br />
+   
+    <div  class="pull-right"><i class="fa fa-expand " data-toggle="tooltip" data-title="Expand window here as you wish"></i></div>
+    
+</div>
 <!-- //RIP modifications End.-->
 <?php echo $footer; ?>
 
@@ -203,23 +264,68 @@
     location = 'index.php?route=account/account';
     });
                                            
-    $('.photo-size').on('mouseenter', function(){
+    $('.photo-size').on('click', function(){
 
-    var src = $(this).attr('src')
+       
+    var src = $(this).attr('src');
+    
             $("#photo-display").dialog({
     open: function () {
+      
     $("#full-figure").attr('src', src);
+    $("#full-figure").attr('style',"width: "+$(this).width()+"px;");
     },
+    dialogClass: 'dialog-class',
             width: $( window ).width() * 0.5,
-            height:$( window ).height()* 0.7,
-            position: { my: "left top", at: "left top", of: window }
+            //height:$( window ).height()* 0.7,
+            position: { my: "left top", at: "left top", of: window },
+             resize: function( event, ui ) {
+
+                   $("#full-figure").attr('style',"width: "+$(this).width()+"px;");
+                    $("#full-figure").attr('style',"height: "+$(this).height()*0.98+"px;");
+             }
+    });//end of dialog
     });
-    });
+    
+    
+
+$('.owl-carousel').owlCarousel({
+    items:1,
+    lazyLoad:true,
+    loop:true,
+    autoWidth:true,
+    navigation : true,
+    navigationText : ["prev", "next"],
+    responsive : true,
+    responsiveRefreshRate : 200,
+    responsiveBaseWidth : window,
+    margin:10
+});
+
+function changeView(){
+    if(!$('.owl-carousel').is(':visible')){
+        $('.row').hide();
+        $('.owl-carousel').show();
+       
+    }else{
+        $('.row').show();
+        $('.owl-carousel').hide();
+    }
+    
+}
+
+
+
+//In order to keep tooltip from showing after the buttin is clicked
+$('[data-toggle="tooltip"]').tooltip({
+    trigger : 'hover'
+}) 
+    /**
     $(".photo-size").on('mouseout', function(){
     $("#photo-display").dialog('close');
     });
 
-
+**/
 
 
 </script>
