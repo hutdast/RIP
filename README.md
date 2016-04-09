@@ -21,6 +21,7 @@ The following files were modified in order to accomodate business needs:
 - Admin/common/menu => changing the ling for the left side column in administration 
 - Admin/controller/common/filemanager => multiple file uploaded enabled
 - Admin/view/template/common/filemanager => multiple file uploaded enabled
+- Admin/model/setting/setting => 2 new functions are introduced: one to set freshbooks and another to get freshbooks
 
 - Catalog/account/home 
 - Catalog/account/login
@@ -29,7 +30,8 @@ The following files were modified in order to accomodate business needs:
 - Catalog/controller/checkout/cart => cart modifications
 - Catalog/system/library/cart => cart modifications
 - Catalog/model/checout/cart => cart query
-
+- Catalog/controller/checkout/payment_method => this is the controller for the comment section upon checking out
+- extension/payment/cod => Cash on delivery is now Freshbooks transactions
 
 
 DATABASE MODIFICATION:
@@ -37,6 +39,7 @@ DATABASE MODIFICATION:
 - table customer was modified
 - table product was rearranged completly => So the client can be the one create the product that way not every picture is a product.
 - table cart in order to capture picture's route as picture name and the id
+- table oc_api is altered and the column name is now varchar 255 character
 
 **** RIP Modifications end. *****
 

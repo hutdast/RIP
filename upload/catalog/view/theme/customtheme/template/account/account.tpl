@@ -10,11 +10,14 @@
     <?php if ($success) { ?>
     <div class="alert alert-success"><i class="fa fa-check-circle"></i> <?php echo  $success; ?> </div>
     <?php } ?>
-  <div class="button-group pull-center" ><!-- Changing the view from ro to carousel -->
+ 
+    <div class="button-group pull-center" ><!-- Changing the view from ro to carousel -->
         <button type="button" class="btn-primary" onclick="changeView();"   data-toggle="tooltip" data-title="Click to change from rows to carousel view">Change View</button>
     </div><!-- Changing the view from ro to carousel end.-->
  
-     <div  class="row " ><!-- Row displays begins -->
+
+    
+     <div  class="row"  ><!-- Row displays begins -->
         <!-- RIP modifications: -->
         <?php foreach($pictures as $pic){ ?> 
         <div class="product-layout col-lg-3 col-md-3 col-sm-6 col-xs-12 " >
@@ -25,7 +28,7 @@
                 <div > 
 
                      <button  type="button" class="btn-primary" data-toggle="tooltip" onclick="wishlist.add('<?php echo $pic; ?>');" data-title="Add to Wish List">WishList</button>
-                    <button type="button" class="btn-primary"  id="<?php echo $pic; ?>" class="createProduct" data-toggle="tooltip" data-title="Select Options"><i class="fa fa-shopping-cart"></i></button>
+                    <button type="button" id="<?php echo $pic; ?>" class="createProduct btn-primary" data-toggle="tooltip" data-title="Select Options"><i class="fa fa-shopping-cart"></i></button>
 
                       <!-- Check which one of those pics are already in the cart therefore viewed -->
 
@@ -56,8 +59,8 @@
         <?php } ?>
        
     </div><!-- Row displays ends. -->
-    
-    <div class="owl-carousel" ><!--Carousel displays begins. -->
+
+    <div class="owl-carousel" style="background:transparent"><!--Carousel displays begins. -->
          <?php foreach($pictures as $pic){ ?> 
          <div  class="owl-lazy" data-src="<?php echo $pic; ?>" >
             <div class="product-thumb transition">
@@ -66,8 +69,7 @@
 
                 <div class="pull-center" > 
 
-                     <button  type="button" class="btn-primary" data-toggle="tooltip" onclick="wishlist.add('<?php echo $pic; ?>');" data-title="Add to Wish List">WishList</button>
-                    <button type="button" class="btn-primary"  id="<?php echo $pic; ?>" class="createProduct" data-toggle="tooltip" data-title="Select Options"><i class="fa fa-shopping-cart"></i></button>
+                    
 
                       <!-- Check which one of those pics are already in the cart therefore viewed -->
 
@@ -101,13 +103,12 @@
     </div><!--Carousel displays ends. -->
 
 
-  
     
     
 </div>
 
 
-<div class="well create-product" style="display:none;"  data-toggle="tooltip" data-title="Select your preferences - scroll down for more options">
+<div class="well create-product" style="display:none;" data-toggle="tooltip" data-title="Select your preferences - scroll down for more options">
     <div class="row"><!--Row header Begins -->
         <div class="col-sm-3">
             <label class="control-label" >Dimensions</label>
@@ -165,20 +166,23 @@
     <div  class="pull-right"><i class="fa fa-expand " data-toggle="tooltip" data-title="Expand window here as you wish"></i></div>
     
 </div>
-<!-- //RIP modifications End.-->
+<!-- //RIP modifications End.  -->
 <?php echo $footer; ?>
 
 <script type="text/javascript">
     //RIP Modifications:
-
+$(function(){
+    $('.owl-carousel').hide();
+});
 
     $('.createProduct').on('click', function(){
-
+ 
    
     //Initialize the array that would send eveything to the back end
     var params = Array();
     //get the product name or product location 
     params.push($(this).attr('id'));
+    
     //Create array that capture the options for the product
     var options = Array();
         //Set all checkboxes from the dialog to false initially
@@ -188,6 +192,8 @@
         
     //Set the options and the checkboxes with initial values if the user has products in the cart
     <?php foreach($cart_products as $cart){ ?>
+        //Since we can't have two identical ids the carousel view needs a button with a different is
+
             if (params[0] == '<?php echo $cart['name']; ?>'){
 
     $("input[type='checkbox'][name='value-pair']").each(function(){
@@ -230,6 +236,7 @@
     });
     params.push(options);
     params.push('<?php echo $customer_id; ?> ');
+   
     $(".create-product").dialog({
             
 
@@ -248,7 +255,7 @@
                     } else {
                     alert('You did not make any choices!');
                     }
-                    //url = 'index.php?route=catalog/product/add&token=<?php echo $token; ?>';
+                   
 
                     location = 'index.php?route=account/account';
                     $(this).dialog("close");
@@ -277,7 +284,7 @@
     },
     dialogClass: 'dialog-class',
             width: $( window ).width() * 0.5,
-            //height:$( window ).height()* 0.7,
+            
             position: { my: "left top", at: "left top", of: window },
              resize: function( event, ui ) {
 
@@ -319,13 +326,35 @@ function changeView(){
 //In order to keep tooltip from showing after the buttin is clicked
 $('[data-toggle="tooltip"]').tooltip({
     trigger : 'hover'
-}) 
+});
+
+
+    /**
+     $( "#slider-range-max" ).slider({
+      range: "max",
+      min: 20,
+      max: 100,
+      value: 2,
+      slide: function( event, ui ) {
+          $( ".resizable" ).resizable({
+               resize: function( event, ui ) {
+    ui.size.height = Math.round( ui.size.height / 30 ) * 30;
+  },
+      alsoResize: ".also"
+    });
+     var w = ui.value /100;
+       // $("#gallery").attr('style',"width: "+$( window ).width() * w+"px;");
+        
+      }
+    });
+    
+    
     /**
     $(".photo-size").on('mouseout', function(){
     $("#photo-display").dialog('close');
     });
-
 **/
+
 
 
 </script>
