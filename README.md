@@ -15,6 +15,7 @@ The following files were modified in order to accomodate business needs:
 - Admin/controller/customer/customer => entry to capture the uploaded files and the name of the foldername for database purpose. 
 - Admin/view/template/customerform.tpl => reflect the efect of the entry above
 - Admin/controller/catalog/product => new interface for the product entries
+- Admin/view/template/catalog/product_list => transform this file into a recipient for Photo attributes such as deep matte or luster 	
 - Admin/model/catalog/product => => add new queries to support its controller counterpart
 - Admin/controller/catalog/category => New interface for the category section to integrate the packages
 - Admin/model/catalog/category 
@@ -22,15 +23,30 @@ The following files were modified in order to accomodate business needs:
 - Admin/controller/common/filemanager => multiple file uploaded enabled
 - Admin/view/template/common/filemanager => multiple file uploaded enabled
 - Admin/model/setting/setting => 2 new functions are introduced: one to set freshbooks and another to get freshbooks
+- Admin/view/template/customer/customer_list => The link to the locking functionality i omitted 	
+- Admin/controller/customer/customer => added the folder name input, the link to upload the folder the validation checks for folder input and freshbooks api to register cuctomers
+- Admin/view/template/common/menu => eliminate all functionalities (links) that are irrelevant to clients
+- Admin/view/template/common/header => Take out the links to Opencart documentation and forums in order to encapsulate client from the mechanism of Opencart
+- Admin/controller/common/filemanager => Modifies in order to accept bmp files and JPG files 		
 
 - Catalog/account/home 
 - Catalog/account/login
 - Catalog/view/template/customtheme folder is created.
 - Catalog/view/javascript/common.js => cart > add was modified to two parameters
+- catalog/view/theme/default/template/checkout/cart => cart modifications 
 - Catalog/controller/checkout/cart => cart modifications
 - Catalog/system/library/cart => cart modifications
-- Catalog/model/checout/cart => cart query
+- catalog/language/english/checkout/checkout => Change the language on payment method and other titles.	
 - Catalog/controller/checkout/payment_method => this is the controller for the comment section upon checking out
+- catalog/controller/account/wishlist => Change $product_info to $product_name and take out the session wishlist.
+- catalog/view/theme/default/template/checkout/payment_method => aesthetics icons for button sync
+- catalog/view/theme/customtheme/template/common/home	 =>  adding carousel, taking our the column left & right and content bottom
+- catalog/model/checkout/order => Create functions to pull freshbooks API data such as request body and invoice numbers
+- catalog/controller/information/contact => Add a ressource to access the link for home
+- catalog/language/english/payment/cod => change the text title to invoice
+- catalog/controller/checkout/payment_address => Place the freshbook API to collect payment address and update customer file on freshbooks
+- catalog/view/theme/default/template/account/password => eliminate colum left and rightand content bottom
+					
 - extension/payment/cod => Cash on delivery is now Freshbooks transactions
 
 
@@ -40,7 +56,9 @@ DATABASE MODIFICATION:
 - table product was rearranged completly => So the client can be the one create the product that way not every picture is a product.
 - table cart in order to capture picture's route as picture name and the id
 - table oc_api is altered and the column name is now varchar 255 character
-
+- table oc_freshbooks_request is created to retain all the request content
+- table oc_freshbooks_api is created to maintain and store the client freshbooks API
+_ table oc_freshbooks_invoice is created to store freshbook invoice numbers
 **** RIP Modifications end. *****
 
 
