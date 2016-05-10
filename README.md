@@ -13,10 +13,10 @@ The following files were modified in order to accomodate business needs:
 - Admin/model/customer/customer => edit and add functions were added and the rest of the file edited
 - Admin/language/customer/customer
 - Admin/controller/customer/customer => entry to capture the uploaded files and the name of the foldername for database purpose. 
-- Admin/view/template/customerform.tpl => reflect the efect of the entry above
+- Admin/view/template/customerform.tpl => reflect the effect of the entry above
 - Admin/controller/catalog/product => new interface for the product entries
 - Admin/view/template/catalog/product_list => transform this file into a recipient for Photo attributes such as deep matte or luster 	
-- Admin/model/catalog/product => => add new queries to support its controller counterpart
+- Admin/model/catalog/product => add new queries to support its controller counterpart
 - Admin/controller/catalog/category => New interface for the category section to integrate the packages
 - Admin/model/catalog/category 
 - Admin/common/menu => changing the ling for the left side column in administration 

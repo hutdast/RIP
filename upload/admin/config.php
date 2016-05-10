@@ -24,8 +24,8 @@ define('DIR_CATALOG', '/Volumes/Extra/Projects/php/opencart/upload/catalog/');
 // DB
 define('DB_DRIVER', 'mysqli');
 define('DB_HOSTNAME', 'localhost');
-define('DB_USERNAME', 'root');
-define('DB_PASSWORD', 'nikeman12');
-define('DB_DATABASE', 'opencartdb');
+define('DB_USERNAME', 'xxxxxxx');
+define('DB_PASSWORD', 'xxxxxxxxxxxxxx');
+define('DB_DATABASE', 'xxxxxxxxxxx');
 define('DB_PORT', '3306');
-define('DB_PREFIX', 'oc_');
+define('DB_PREFIX', 'xxx');
