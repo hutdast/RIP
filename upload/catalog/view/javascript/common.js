@@ -26,6 +26,7 @@ function getURLVar(key) {
 
 
 $(document).ready(function() {
+    
 	// Highlight any found errors
 	$('.text-danger').each(function() {
 		var element = $(this).parent().parent();
@@ -150,11 +151,17 @@ var cart = {
             },
             complete: function () {
 
-                $('#cart > button').button('reset');
+               
             },
             success: function (json) {
 
                 $('.alert, .text-danger').remove();
+
+		 $('#cart > button').html('<span id="cart-total"><i class="fa fa-shopping-cart"></i> ' + json['total'] + '</span>');
+                $('html, body').animate({scrollTop: 0}, 'slow');
+                 $('#cart > ul').load('index.php?route=common/cart/info ul li');
+
+
 
                 if (json['redirect']) {
                     location = json['redirect'];
@@ -277,11 +284,13 @@ var voucher = {
 }
 
 var wishlist = {
-	'add': function(product_id) {
+	'add': function(product_name) {
+     
+            
 		$.ajax({
 			url: 'index.php?route=account/wishlist/add',
 			type: 'post',
-			data: 'product_id=' + product_name,
+			data: 'product_name=' + product_name,
 			dataType: 'json',
 			success: function(json) {
 				$('.alert').remove();
@@ -293,7 +302,8 @@ var wishlist = {
 				if (json['success']) {
 					$('#content').parent().before('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 				}
-                                location = 'index.php?route=account/account';
+                                
+                                
 				$('#wishlist-total span').html(json['total']);
 				$('#wishlist-total').attr('title', json['total']);
 
@@ -305,7 +315,7 @@ var wishlist = {
 		});
 	},
 	'remove': function() {
-
+          
 	}
 }
 
@@ -494,12 +504,4 @@ $(document).delegate('.agree', 'click', function(e) {
 
 		});
 	}
-})(window.jQuery);
-
-
-
-
-
-
-                              
-             
+})(window.jQuery)

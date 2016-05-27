@@ -1,12 +1,11 @@
 <?php
 class ControllerCommonDashboard extends Controller {
 	public function index() {
-             
 		$this->load->language('common/dashboard');
 
 		$this->document->setTitle($this->language->get('heading_title'));
-                
-                //RIP modification:Check if the folder is 30 days older
+		
+		 //RIP modification:Check if the folder is 30 days older
                 $date = time();//Today's date equivalent to NOW() sql
                 $this->load->model('customer/customer');
                 $customers = $this->model_customer_customer->getCustomers();
@@ -17,7 +16,7 @@ class ControllerCommonDashboard extends Controller {
                      $filenames = scandir($directory); 
                        //Delete after 31 days as soon the admin logs in, this function is triggered
                     if(($date - $dateAdded) > 2741509 ){
-                        $customerID = $customer['customer_id'];
+                    $customerID = $customer['customer_id'];
                         //Disable customer so he/she wont be able to log in
                         $tempdb['status'] = 0;
                         $this->model_customer_customer->editCustomer($customerID, $tempdb);
@@ -34,7 +33,7 @@ class ControllerCommonDashboard extends Controller {
       }//foreach customers  end.
                 
                 //RIP modification:End.
-                
+
 		$data['heading_title'] = $this->language->get('heading_title');
 
 		$data['text_sale'] = $this->language->get('text_sale');
@@ -53,13 +52,13 @@ class ControllerCommonDashboard extends Controller {
 			'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL')
 		);
-// Check install directory exists
+
+		// Check install directory exists
 		if (is_dir(dirname(DIR_APPLICATION) . '/install')) {
 			$data['error_install'] = $this->language->get('error_install');
 		} else {
 			$data['error_install'] = '';
 		}
-		
 
 		$data['token'] = $this->session->data['token'];
 

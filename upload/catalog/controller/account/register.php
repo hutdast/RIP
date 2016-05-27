@@ -86,7 +86,6 @@ class ControllerAccountRegister extends Controller {
 		$data['entry_newsletter'] = $this->language->get('entry_newsletter');
 		$data['entry_password'] = $this->language->get('entry_password');
 		$data['entry_confirm'] = $this->language->get('entry_confirm');
-        $data['entry_folder_name'] = $this->language->get('entry_folder_name');
 
 		$data['button_continue'] = $this->language->get('button_continue');
 		$data['button_upload'] = $this->language->get('button_upload');
@@ -313,12 +312,6 @@ class ControllerAccountRegister extends Controller {
 		} else {
 			$data['newsletter'] = '';
 		}
-        
-        if (isset($this->request->post['folder_name'])) {
-            $data['folder_name'] = $this->request->post['folder_name'];
-        } else {
-            $data['folder_name'] = '';
-        }
 
 		// Captcha
 		if ($this->config->get($this->config->get('config_captcha') . '_status') && in_array('register', (array)$this->config->get('config_captcha_page'))) {

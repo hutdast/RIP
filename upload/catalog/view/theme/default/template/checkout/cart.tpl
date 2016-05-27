@@ -58,10 +58,9 @@
                                 <td class="text-left"><?php echo $product['name']; ?>  </td>
                                 <td class="text-left">
 
-                                    <?php foreach($product['option'] as $option) { ?>
-                                    <br />
-                                    <small><?php echo $option; ?></small>
-                                    <?php } ?>
+                                   
+                                    <small><?php echo $product['option']; ?></small>
+                                   
 
                                 </td>
 
@@ -77,17 +76,15 @@
 
 
                             <?php } ?>
-                           
+                          
                         </tbody>
                     </table>
                 </div>
             </form>
-            <?php if ( $shipping) { ?>
-            <h2><?php echo $text_next; ?></h2>
-            <p><?php echo $text_next_choice; ?></p>
-            <div class="panel-group" id="accordion"><?php echo $shipping; ?></div>
-            <?php } ?>
-            <br />
+            
+            
+            
+        
             <div class="row">
                 <div class="col-sm-4 col-sm-offset-8">
                     <table class="table table-bordered">
@@ -100,6 +97,9 @@
                     </table>
                 </div>
             </div>
+            
+            
+            
             <div class="buttons">
                 <div class="pull-left"><a href="<?php echo $continue; ?>" class="btn btn-default"><?php echo $button_shopping; ?></a></div>
                 <div class="pull-right"><a href="<?php echo $checkout; ?>" class="btn btn-primary"><?php echo $button_checkout; ?></a></div>

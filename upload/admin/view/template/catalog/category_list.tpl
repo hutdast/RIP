@@ -58,7 +58,7 @@
                     <div class="col-sm-2">
                         <div class="form-group">
 
-                            <label class="control-label" for="description-id">Descriptions</label>
+                            <label class="control-label" title="Use enter key for new line" for="description-id">Descriptions</label>
                             <textarea name="descriptions" class="form-control"  id="descriptions-id"></textarea> 
                             <input type="hidden" id="description-id" value=""/>
                         </div>
@@ -116,15 +116,15 @@
                             <!-- Dimensions Editing sections end -->
 
                             <!-- Size Editing sections -->
-                            <td contenteditable="true" class="edit" id="<?php echo $package['package_name'].'~!'.'price';?>">
-                                <i class="fa fa-pencil"></i>
+                            <td  class="edit" id="<?php echo $package['package_name'].'~!'.'price';?>">
+                               
                                 <?php echo $package['price']; ?>
                             </td>
                             <!-- Size Editing sections end -->
 
                             <!-- Luster Editing sections -->
-                            <td contenteditable="true" class="edit" id="<?php echo $package['package_name'].'~!'.'descriptions';?>"> 
-                                <i class="fa fa-pencil"></i>
+                            <td  class="edit" id="<?php echo $package['package_name'].'~!'.'descriptions';?>"> 
+                                
                                 <?php foreach (explode('~!',$package['descriptions']) as $descrip) { ?>
                                 <?php echo $descrip; ?></br>
                                 <?php } ?>
@@ -175,7 +175,7 @@
         var descrip = $(this).val().split('\n');
         var container = '';
         for (var item in descrip) {
-            container += descrip[item] + '~!';
+            container += descrip[item].trim() + '~!';
         }
 
         $('#description-id').val(container);
@@ -185,11 +185,16 @@
     $('#add-package').on('click', function () {
 
         var params = Array();
+	 var descrip = $('#description-id').val().split('\n');
+        var container = '';
+        for (var item in descrip) {
+            container += descrip[item].trim() + '~!';
+        }
 
 
         params.push($('input[name=\'package_name\']').val());
         params.push(parseFloat($('input[name=\'price\']').val()));
-        params.push($('#description-id').val());
+        params.push(container);
         sendEntries(params, 'add');
 
 
@@ -269,7 +274,7 @@
            
             var arr = thevalue.split(',');
             for (var item in arr) {
-                temp += $.trim(arr[item])+ '~!';
+                temp += $.trim(arr[item]).trim()+ '~!';
             }
 
         }

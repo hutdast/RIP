@@ -6,7 +6,6 @@ class ControllerTotalReward extends Controller {
 		$points_total = 0;
 
 		
-
 		if ($points && $points_total && $this->config->get('reward_status')) {
 			$this->load->language('total/reward');
 

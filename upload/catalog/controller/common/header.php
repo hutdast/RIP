@@ -3,7 +3,10 @@ class ControllerCommonHeader extends Controller {
 	public function index() {
 		// Analytics
 		$this->load->model('extension/extension');
-
+//Get the list of categories for prices display
+                $this->load->model('catalog/product');
+                $data['all_prices'] = $this->model_catalog_product->getCategory();
+                $data['packages'] = $this->model_catalog_product->getPackages();
 		$data['analytics'] = array();
 
 		$analytics = $this->model_extension_extension->getExtensions('analytics');
@@ -59,13 +62,13 @@ class ControllerCommonHeader extends Controller {
 		}
         //RIP modifications: users cannot register themselves, registration would be done on the administrative side.
         //$data['register'] = $this->url->link('account/register', '', 'SSL');
-        
-        
-        if(!isset( $this->request->get['route']) || explode("/", (string) $this->request->get['route'])[1] == "home"){
-            
-            $data['styleClass'] = 'home-bg';
-        }else{
-            $styleClass = explode("/", (string) $this->request->get['route']);
+
+                //Specify the style class for html element depending on the route
+                if(!isset( $this->request->get['route']) || explode("/", (string) $this->request->get['route'])[1] == "home"){
+           
+                      $data['styleClass'] = 'home-bg';
+                }else{
+                     $styleClass = explode("/", (string) $this->request->get['route']);
                     if($styleClass[1] == 'information' ){
                         $data['styleClass'] = 'aboutus-bg';
                     }else if($styleClass[1] == 'contact'){
@@ -78,22 +81,19 @@ class ControllerCommonHeader extends Controller {
                         $data['styleClass'] = 'galleries-bg'; 
                     }else if($styleClass[1] == 'weddings'){
                         $data['styleClass'] = 'weddings-bg'; 
-                    }else if($styleClass[1] == 'portraits'){
+                    }else{
                         $data['styleClass'] = 'portraits-bg'; 
                     }
-            
-        }
-        
-        
-        
-        
-        
+                      
+                }
+              
+       
         
 		$data['text_shopping_cart'] = $this->language->get('text_shopping_cart');
 		$data['text_logged'] = sprintf($this->language->get('text_logged'), $this->url->link('account/account', '', 'SSL'), $this->customer->getFirstName(), $this->url->link('account/logout', '', 'SSL'));
 
 		$data['text_account'] = $this->language->get('text_account');
-		$data['text_register'] = $this->language->get('text_register');
+		
 		$data['text_login'] = $this->language->get('text_login');
 		$data['text_order'] = $this->language->get('text_order');
 		$data['text_transaction'] = $this->language->get('text_transaction');
@@ -111,6 +111,9 @@ class ControllerCommonHeader extends Controller {
                 $data['account_edit'] = $this->url->link('account/edit', '', 'SSL');
                 $data['account_pass'] = $this->url->link('account/password', '', 'SSL');
                 $data['account_add_address'] = $this->url->link('account/address', '', 'SSL');
+                $data['admin'] = HTTPS_SERVER.'admin';
+            
+                
 		
 		$data['login'] = $this->url->link('account/login', '', 'SSL');
 		$data['order'] = $this->url->link('account/order', '', 'SSL');

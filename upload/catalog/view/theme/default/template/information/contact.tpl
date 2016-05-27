@@ -99,7 +99,9 @@
         </div>
         <?php } ?>
       </div>
-      <?php } ?>
+     <?php } ?>
+	
+
       <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" class="form-horizontal">
         <fieldset>
           <legend><?php echo $text_contact; ?></legend>
@@ -142,3 +144,4 @@
     <?php echo $column_right; ?></div>
 </div>
 <?php echo $footer; ?>
+

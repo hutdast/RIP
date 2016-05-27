@@ -1,288 +1,319 @@
 <?php
-    
-    class ControllerCheckoutPaymentAddress extends Controller {
-        
-        public function index() {
-            $this->load->language('checkout/checkout');
-            
-            $data['text_address_existing'] = $this->language->get('text_address_existing');
-            $data['text_address_new'] = $this->language->get('text_address_new');
-            $data['text_select'] = $this->language->get('Select Region/State');
-            $data['text_none'] = $this->language->get('text_none');
-            $data['text_loading'] = $this->language->get('text_loading');
-            
-            $data['entry_firstname'] = $this->language->get('entry_firstname');
-            $data['entry_lastname'] = $this->language->get('entry_lastname');
-            $data['entry_company'] = $this->language->get('entry_company');
-            $data['entry_address_1'] = $this->language->get('entry_address_1');
-            $data['entry_address_2'] = $this->language->get('entry_address_2');
-            $data['entry_postcode'] = $this->language->get('entry_postcode');
-            $data['entry_city'] = $this->language->get('entry_city');
-            $data['entry_country'] = $this->language->get('entry_country');
-            $data['entry_zone'] = $this->language->get('entry_zone');
-            
-            $data['button_continue'] = $this->language->get('Continue');
-            $data['button_upload'] = $this->language->get('button_upload');
-            
-            if (isset($this->session->data['payment_address']['address_id'])) {
-                $data['address_id'] = $this->session->data['payment_address']['address_id'];
-            } else {
-                $data['address_id'] = $this->customer->getAddressId();
-            }
-            
-            $this->load->model('account/address');
-            
-            $data['addresses'] = $this->model_account_address->getAddresses();
-            
-            if (isset($this->session->data['payment_address']['country_id'])) {
-                $data['country_id'] = $this->session->data['payment_address']['country_id'];
-            } else {
-                $data['country_id'] = $this->config->get('config_country_id');
-            }
-            
-            if (isset($this->session->data['payment_address']['zone_id'])) {
-                $data['zone_id'] = $this->session->data['payment_address']['zone_id'];
-            } else {
-                $data['zone_id'] = '';
-            }
-            
-            $this->load->model('localisation/country');
-            
-            $data['countries'] = $this->model_localisation_country->getCountries();
-            
-            // Custom Fields
-            $this->load->model('account/custom_field');
-            
-            $data['custom_fields'] = $this->model_account_custom_field->getCustomFields($this->config->get('config_customer_group_id'));
-            
-            if (isset($this->session->data['payment_address']['custom_field'])) {
-                $data['payment_address_custom_field'] = $this->session->data['payment_address']['custom_field'];
-            } else {
-                $data['payment_address_custom_field'] = array();
-            }
-            
-            //Start the request for creating a freshbook client using the billing info shipping info will be part of the invoice creation
-            $poststring = '<?xml version="1.0" encoding="utf-8"?><request method="client.list"><email>'.$this->customer->getEmail().'</email></request> ';
-$curl = curl_init();
-curl_setopt($curl, CURLOPT_URL, "https://asu-receivables.freshbooks.com/api/2.1/xml-in");
-curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
-curl_setopt($curl, CURLOPT_TIMEOUT, 40);
-curl_setopt($curl, CURLOPT_POSTFIELDS, $poststring);
-curl_setopt($curl, CURLOPT_USERPWD, "0d2247acc410b0e26fad2de3cf157b42:X");
-curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
-$result = curl_exec($curl);
-$errmsg = curl_error($curl);
-$cInfo = curl_getinfo($curl);
-curl_close($curl);
-$response = json_decode(json_encode(simplexml_load_string($result)), true);
 
+class ControllerCheckoutPaymentAddress extends Controller {
 
-//If response is ok there is a connection else we have to let customer know
+    public function index() {
+        $this->load->language('checkout/checkout');
 
-if ($response['@attributes']['status'] == 'ok') {
-    $this->customer->setCustomField($response['clients']['client']['client_id']);
-}
+        $data['text_address_existing'] = $this->language->get('text_address_existing');
+        $data['text_address_new'] = $this->language->get('text_address_new');
+        $data['text_select'] = $this->language->get('Select Region/State');
+        $data['text_none'] = $this->language->get('text_none');
+        $data['text_loading'] = $this->language->get('text_loading');
 
+        $data['entry_firstname'] = $this->language->get('entry_firstname');
+        $data['entry_lastname'] = $this->language->get('entry_lastname');
+        $data['entry_company'] = $this->language->get('entry_company');
+        $data['entry_address_1'] = $this->language->get('entry_address_1');
+        $data['entry_address_2'] = $this->language->get('entry_address_2');
+        $data['entry_postcode'] = $this->language->get('entry_postcode');
+        $data['entry_city'] = $this->language->get('entry_city');
+        $data['entry_country'] = $this->language->get('entry_country');
+        $data['entry_zone'] = $this->language->get('entry_zone');
 
+        $data['button_continue'] = $this->language->get('Continue');
+        $data['button_upload'] = $this->language->get('button_upload');
 
-            if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/checkout/payment_address.tpl')) {
-                $this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/checkout/payment_address.tpl', $data));
-            } else {
-                $this->response->setOutput($this->load->view('default/template/checkout/payment_address.tpl', $data));
-            }
+        if (isset($this->session->data['payment_address']['address_id'])) {
+            $data['address_id'] = $this->session->data['payment_address']['address_id'];
+        } else {
+            $data['address_id'] = $this->customer->getAddressId();
+        }
+
+        $this->load->model('account/address');
+       
+
+        $data['addresses'] = $this->model_account_address->getAddresses();
+
+        if (isset($this->session->data['payment_address']['country_id'])) {
+            $data['country_id'] = $this->session->data['payment_address']['country_id'];
+        } else {
+            $data['country_id'] = $this->config->get('config_country_id');
+        }
+
+        if (isset($this->session->data['payment_address']['zone_id'])) {
+            $data['zone_id'] = $this->session->data['payment_address']['zone_id'];
+        } else {
+            $data['zone_id'] = '';
+        }
+
+        $this->load->model('localisation/country');
+
+        $data['countries'] = $this->model_localisation_country->getCountries();
+
+        // Custom Fields
+        $this->load->model('account/custom_field');
+
+        $data['custom_fields'] = $this->model_account_custom_field->getCustomFields($this->config->get('config_customer_group_id'));
+
+        if (isset($this->session->data['payment_address']['custom_field'])) {
+            $data['payment_address_custom_field'] = $this->session->data['payment_address']['custom_field'];
+        } else {
+            $data['payment_address_custom_field'] = array();
         }
         
-        public function save() {
-            $this->load->language('checkout/checkout');
-            
-            $json = array();
-            
-            // Validate if customer is logged in.
-            if (!$this->customer->isLogged()) {
-                $json['redirect'] = $this->url->link('checkout/checkout', '', 'SSL');
-            }
-            
-            // Validate cart has products and has stock.
-            if ((!$this->cart->hasProducts() && empty($this->session->data['vouchers'])) || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout'))) {
-                $json['redirect'] = $this->url->link('checkout/cart');
-            }
-            
-            // Validate minimum quantity requirements.
-            $products = $this->cart->getProducts();
-            
-            foreach ($products as $product) {
-                $product_total = 0;
-                
-                foreach ($products as $product_2) {
-                    if ($product_2['product_id'] == $product['product_id']) {
-                        $product_total += $product_2['quantity'];
-                    }
-                }
-            }
-            
-            $order_data = array();
-            if (!$json) {
-                if (isset($this->request->post['payment_address']) && $this->request->post['payment_address'] == 'existing') {
-                    $this->load->model('account/address');
-                    
-                    if (empty($this->request->post['address_id'])) {
-                        $json['error']['warning'] = $this->language->get('error_address');
-                    } elseif (!in_array($this->request->post['address_id'], array_keys($this->model_account_address->getAddresses()))) {
-                        $json['error']['warning'] = $this->language->get('error_address');
-                    }
-                    
-                    if (!$json) {
-                        // Default Payment Address
-                        $this->load->model('account/address');
-                        
-                        $addres_arr = $this->model_account_address->getAddress($this->request->post['address_id']);
-                        $this->session->data['payment_address'] = $addres_arr;
-                        unset($this->session->data['payment_method']);
-                        unset($this->session->data['payment_methods']);
-                        
-                        $order_data = array(
-                                            'firstname' => $addres_arr['firstname'],
-                                            'lastname' => $addres_arr['lastname'],
-                                            'payment_company' => $this->customer->getFolderName(),
-                                            'email' => $this->customer->getEmail(),
-                                            'telephone' => $this->customer->getTelephone(),
-                                            'payment_address_1' => $addres_arr['address_1'],
-                                            'payment_address_2' => $addres_arr['address_2'],
-                                            'payment_city' => $addres_arr['city'],
-                                            'payment_zone' => $addres_arr['zone'],
-                                            'shipping_country' => $addres_arr['country'],
-                                            'payment_postcode' => $addres_arr['zone_code']
-                                            );
-                        
-                    }
-                } else {
-                    if ((utf8_strlen(trim($this->request->post['firstname'])) < 1) || (utf8_strlen(trim($this->request->post['firstname'])) > 32)) {
-                        $json['error']['firstname'] = $this->language->get('error_firstname');
-                    }
-                    
-                    if ((utf8_strlen(trim($this->request->post['lastname'])) < 1) || (utf8_strlen(trim($this->request->post['lastname'])) > 32)) {
-                        $json['error']['lastname'] = $this->language->get('error_lastname');
-                    }
-                    
-                    if ((utf8_strlen(trim($this->request->post['address_1'])) < 3) || (utf8_strlen(trim($this->request->post['address_1'])) > 128)) {
-                        $json['error']['address_1'] = $this->language->get('error_address_1');
-                    }
-                    
-                    if ((utf8_strlen($this->request->post['city']) < 2) || (utf8_strlen($this->request->post['city']) > 32)) {
-                        $json['error']['city'] = $this->language->get('error_city');
-                    }
-                    
-                    $this->load->model('localisation/country');
-                    
-                    $country_info = $this->model_localisation_country->getCountry($this->request->post['country_id']);
-                    
-                    if ($country_info && $country_info['postcode_required'] && (utf8_strlen(trim($this->request->post['postcode'])) < 2 || utf8_strlen(trim($this->request->post['postcode'])) > 10)) {
-                        $json['error']['postcode'] = $this->language->get('error_postcode');
-                    }
-                    
-                    if ($this->request->post['country_id'] == '') {
-                        $json['error']['country'] = $this->language->get('error_country');
-                    }
-                    
-                    if (!isset($this->request->post['zone_id']) || $this->request->post['zone_id'] == '') {
-                        $json['error']['zone'] = $this->language->get('error_zone');
-                    }
-                    
-                    // Custom field validation
-                    $this->load->model('account/custom_field');
-                    
-                    $custom_fields = $this->model_account_custom_field->getCustomFields($this->config->get('config_customer_group_id'));
-                    
-                    foreach ($custom_fields as $custom_field) {
-                        if (($custom_field['location'] == 'address') && $custom_field['required'] && empty($this->request->post['custom_field'][$custom_field['custom_field_id']])) {
-                            $json['error']['custom_field' . $custom_field['custom_field_id']] = sprintf($this->language->get('error_custom_field'), $custom_field['name']);
-                        }
-                    }
-                    
-                    if (!$json) {
-                        // Default Payment Address
-                        $this->load->model('account/address');
-                        $address_id = $this->model_account_address->addAddress($this->request->post);
-                        $addres_arr = $this->model_account_address->getAddress($address_id);
-                        $this->session->data['payment_address'] = $addres_arr;
-                        
-                        //RIP modifications:Start accumulating data
-                        //RIP modifications:Adding the customer to formulate a client for Freshbooks request
-                        
-                        
-                        
-                        $order_data = array(
-                                            'firstname' => $addres_arr['firstname'],
-                                            'lastname' => $addres_arr['lastname'],
-                                            'payment_company' => $this->customer->getFolderName(),
-                                            'email' => $this->customer->getEmail(),
-                                            'telephone' => $this->customer->getTelephone(),
-                                            'payment_address_1' => $addres_arr['address_1'],
-                                            'payment_address_2' => $addres_arr['address_2'],
-                                            'payment_city' => $addres_arr['city'],
-                                            'payment_zone' => $addres_arr['zone'],
-                                            'shipping_country' => $addres_arr['country'],
-                                            'payment_postcode' => $addres_arr['zone_code']
-                                            );
+        //Start the request for creating a freshbook client using the billing info shipping info will be part of the invoice creation
+         $this->load->model('checkout/order');
+         $api = array();
+         //if there are not API in database
+            if(count($this->model_checkout_order->getFresbooks('rustik')) > 0 ){
+               $api =  $this->model_checkout_order->getFresbooks('rustik');
+        $poststring = '<?xml version="1.0" encoding="utf-8"?><request method="client.list"><email>'.$this->customer->getEmail().'</email>'
+        .'<folder>active</folder></request> ';
+        $curl = curl_init();
+        curl_setopt($curl, CURLOPT_URL, $api['url']);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($curl, CURLOPT_TIMEOUT, 40);
+        curl_setopt($curl, CURLOPT_POSTFIELDS, $poststring);
+        curl_setopt($curl, CURLOPT_USERPWD,  $api['key']);
+        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+        $result = curl_exec($curl);
+        $errmsg = curl_error($curl);
+        $cInfo = curl_getinfo($curl);
+        curl_close($curl);
 
-                        
-                        unset($this->session->data['payment_method']);
-                        unset($this->session->data['payment_methods']);
-                        
-                        $this->load->model('account/activity');
-                        
-                        $activity_data = array(
-                                               'customer_id' => $this->customer->getId(),
-                                               'name' => $this->customer->getFirstName() . ' ' . $this->customer->getLastName()
-                                               );
-                        
-                        $this->model_account_activity->addActivity('address_add', $activity_data);
-                    }
-                }
-            }
-            
-            $this->load->model('checkout/order');
-            $client_info = array((int) $this->customer->getCustomField(), $order_data['firstname'], $order_data['lastname'], $order_data['payment_company'], $order_data['email'],
-                                 'password', $order_data['email'], $order_data['telephone'], $order_data['payment_address_1'], $order_data['payment_address_2'],
-                                 $order_data['payment_city'], $order_data['payment_zone'], $order_data['shipping_country'], $order_data['payment_postcode']);
-            
-            $poststring = '';
-            $client_request = explode("~!", $this->model_checkout_order->freshbooks('client_update')['request']);
-            $client_info_index = 0;
-            foreach ($client_request as $request_value) {
-                $poststring .= $request_value;
-                if ($client_info_index < count($client_info)) {
-                    $poststring .= $client_info[$client_info_index];
-                }
-                
-                $client_info_index++;
-            }
-            
-            
-            //Start the request for creating a freshbook client using the billing info shipping info will be part of the invoice creation
-            
-            $curl = curl_init();
-            curl_setopt($curl, CURLOPT_URL, "https://asu-receivables.freshbooks.com/api/2.1/xml-in");
-            curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
-            curl_setopt($curl, CURLOPT_TIMEOUT, 40);
-            curl_setopt($curl, CURLOPT_POSTFIELDS, $poststring);
-            curl_setopt($curl, CURLOPT_USERPWD, "0d2247acc410b0e26fad2de3cf157b42:X");
-            curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
-            $result = curl_exec($curl);
-            $errmsg = curl_error($curl);
-            $cInfo = curl_getinfo($curl);
-            curl_close($curl);
-            $response = json_decode(json_encode(simplexml_load_string($result)), true);
-            
-            
-            //If response is ok there is a connection else we have to let customer know
-            
-            if ($response['@attributes']['status'] != 'ok') {
-                $json['error']['connection'] = 'Connection problem, please try again! ';
-            }
-            
-            $this->response->addHeader('Content-Type: application/json');
-            $this->response->setOutput(json_encode($json));
+	if(strpos($result ,'<?xml') != false){
+        $response = json_decode(json_encode(simplexml_load_string($result)), true);
+
+
+        //If response is ok there is a connection else we have to let customer know
+	
+        if ($response['@attributes']['status'] == 'ok') {
+           
+         $this->customer->setCustomField($response['clients']['client']['client_id']);
+         
+        } 
+
+	}//End of checking if service is activated or not
+
+            }//End of if statemtnt for checking the count on rustik api
+
+        if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/checkout/payment_address.tpl')) {
+            $this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/checkout/payment_address.tpl', $data));
+        } else {
+            $this->response->setOutput($this->load->view('default/template/checkout/payment_address.tpl', $data));
         }
-        
     }
+
+    public function save() {
+        $this->load->language('checkout/checkout');
+
+        $json = array();
+
+        // Validate if customer is logged in.
+        if (!$this->customer->isLogged()) {
+            $json['redirect'] = $this->url->link('checkout/checkout', '', 'SSL');
+        }
+
+        // Validate cart has products and has stock.
+        if ((!$this->cart->hasProducts()) || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout'))) {
+            $json['redirect'] = $this->url->link('checkout/cart');
+        }
+
+
+        $products = $this->cart->getProducts();
+
+        foreach ($products as $product) {
+            $product_total = 0;
+
+            foreach ($products as $product_2) {
+                if ($product_2['product_id'] == $product['product_id']) {
+                    $product_total += $product_2['quantity'];
+                }
+            }
+        }
+
+
+        $order_data = array();
+        $client_info = array();
+        if (!$json) {
+            if (isset($this->request->post['payment_address']) && $this->request->post['payment_address'] == 'existing') {
+                $this->load->model('account/address');
+
+                if (empty($this->request->post['address_id'])) {
+                    $json['error']['warning'] = $this->language->get('error_address');
+                } elseif (!in_array($this->request->post['address_id'], array_keys($this->model_account_address->getAddresses()))) {
+                    $json['error']['warning'] = $this->language->get('error_address');
+                }
+               
+                if (!$json) {
+                    // Default Payment Address
+                    $this->load->model('account/address');
+                    $addres_arr = $this->model_account_address->getAddress($this->request->post['address_id']);
+                    $this->session->data['payment_address'] = $addres_arr;
+
+                    unset($this->session->data['payment_method']);
+                    unset($this->session->data['payment_methods']);
+
+
+
+                    $order_data = array(
+                        'firstname' => $addres_arr['firstname'],
+                        'lastname' => $addres_arr['lastname'],
+                        'payment_company' => $this->customer->getFolderName(),
+                        'email' => $this->customer->getEmail(),
+                        'telephone' => $this->customer->getTelephone(),
+                        'payment_address_1' => $addres_arr['address_1'],
+                        'payment_address_2' => $addres_arr['address_2'],
+                        'payment_city' => $addres_arr['city'],
+                        'payment_zone' => $addres_arr['zone'],
+                        'shipping_country' => $addres_arr['country'],
+                        'payment_postcode' => $addres_arr['zone_code']
+                    );
+                     $client_info = array((int)$this->customer->getCustomField(), $order_data['firstname'], $order_data['lastname'], $order_data['payment_company'], $order_data['email'],
+            'password', $order_data['email'], $order_data['telephone'], $order_data['payment_address_1'], $order_data['payment_address_2'],
+            $order_data['payment_city'], $order_data['payment_zone'], $order_data['shipping_country'], $order_data['payment_postcode']);
+
+                    
+                }
+            } else {
+
+
+                if ((utf8_strlen(trim($this->request->post['firstname'])) < 1) || (utf8_strlen(trim($this->request->post['firstname'])) > 32)) {
+                    $json['error']['firstname'] = $this->language->get('error_firstname');
+                }
+
+
+                if ((utf8_strlen(trim($this->request->post['lastname'])) < 1) || (utf8_strlen(trim($this->request->post['lastname'])) > 32)) {
+                    $json['error']['lastname'] = $this->language->get('error_lastname');
+                }
+
+                if ((utf8_strlen(trim($this->request->post['address_1'])) < 3) || (utf8_strlen(trim($this->request->post['address_1'])) > 128)) {
+                    $json['error']['address_1'] = $this->language->get('error_address_1');
+                }
+
+                if ((utf8_strlen($this->request->post['city']) < 2) || (utf8_strlen($this->request->post['city']) > 32)) {
+                    $json['error']['city'] = $this->language->get('error_city');
+                }
+
+                $this->load->model('localisation/country');
+
+                $country_info = $this->model_localisation_country->getCountry($this->request->post['country_id']);
+
+                if ($country_info && $country_info['postcode_required'] && (utf8_strlen(trim($this->request->post['postcode'])) < 2 || utf8_strlen(trim($this->request->post['postcode'])) > 10)) {
+                    $json['error']['postcode'] = $this->language->get('error_postcode');
+                }
+
+                if ($this->request->post['country_id'] == '') {
+                    $json['error']['country'] = $this->language->get('error_country');
+                }
+
+                if (!isset($this->request->post['zone_id']) || $this->request->post['zone_id'] == '') {
+                    $json['error']['zone'] = $this->language->get('error_zone');
+                }
+
+                // Custom field validation
+                $this->load->model('account/custom_field');
+
+                
+                if (!$json) {
+                    // Default Payment Address
+                    $this->load->model('account/address');    
+                    $address_id = $this->model_account_address->addAddress($this->request->post);
+                    
+                    $addres_arr = $this->model_account_address->getAddress($address_id);
+                    $this->session->data['payment_address'] = $addres_arr;
+
+                    //RIP modifications:Start accumulating data
+                    //RIP modifications:Adding the customer to formulate a client for Freshbooks request
+                  
+
+
+                    $order_data = array(
+                        'firstname' => $this->customer->getFirstName(),
+                        'lastname' => $this->customer->getLastName(),
+                        'payment_company' => $this->customer->getFolderName(),
+                        'email' => $this->customer->getEmail(),
+                        'telephone' => $this->customer->getTelephone(),
+                        'payment_address_1' => (isset($addres_arr['address_1'])?$addres_arr['address_1']:''),
+                        'payment_address_2' => (isset($addres_arr['address_2'])?$addres_arr['address_2']:''),
+                        'payment_city' => (isset($addres_arr['city'])?$addres_arr['city']:''),
+                        'payment_zone' => (isset($addres_arr['zone'])?$addres_arr['zone']:''),
+                        'shipping_country' => (isset($addres_arr['country'])?$addres_arr['country']:''),
+                        'payment_postcode' => (isset($addres_arr['zone_code'])?$addres_arr['zone_code']:'')
+                    );
+ $client_info = array((int)$this->customer->getCustomField(), $order_data['firstname'], $order_data['lastname'], $order_data['payment_company'], $order_data['email'],
+            'password', $order_data['email'], $order_data['telephone'], $order_data['payment_address_1'], $order_data['payment_address_2'],
+            $order_data['payment_city'], $order_data['payment_zone'], $order_data['shipping_country'], $order_data['payment_postcode']);
+
+
+
+                    unset($this->session->data['payment_method']);
+                    unset($this->session->data['payment_methods']);
+
+                    $this->load->model('account/activity');
+
+                    $activity_data = array(
+                        'customer_id' => $this->customer->getId(),
+                        'name' => $this->customer->getFirstName() . ' ' . $this->customer->getLastName()
+                    );
+
+                    $this->model_account_activity->addActivity('address_add', $activity_data);
+                }
+            }
+        }
+
+        
+        $this->load->model('checkout/order');
+       
+        $poststring = '';
+        $client_request = explode("~!", $this->db->freshbooks('client_update')['request']);
+        $client_info_index = 0;
+        foreach ($client_request as $request_value) {
+            $poststring .= $request_value;
+            if ($client_info_index < count($client_info)) {
+                $poststring .= $client_info[$client_info_index];
+            }
+
+            $client_info_index++;
+        }
+
+
+        //Start the request for creating a freshbook client using the billing info shipping info will be part of the invoice creation
+
+        $api = array();
+         if(count($this->model_checkout_order->getFresbooks('rustik')) > 0 ){
+               $api =  $this->model_checkout_order->getFresbooks('rustik');
+        $curl = curl_init();
+        curl_setopt($curl, CURLOPT_URL, $api['url']);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($curl, CURLOPT_TIMEOUT, 40);
+        curl_setopt($curl, CURLOPT_POSTFIELDS, $poststring);
+        curl_setopt($curl, CURLOPT_USERPWD, $api['key']);
+        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+        $result = curl_exec($curl);
+        $errmsg = curl_error($curl);
+        $cInfo = curl_getinfo($curl);
+        curl_close($curl);
+
+	if(strpos($result, '<?xml') != false  ){
+        $response = json_decode(json_encode(simplexml_load_string($result)), true);
+
+
+        //If response is ok there is a connection else we have to let customer know
+
+        if ($response['@attributes']['status'] != 'ok') {
+         $json['error']['connection'] = 'Connection problem, please try again! ';
+        } 
+
+	}//end of checking activation of service
+
+     }//End of count($this->model_setting_setting->getFresbooks('rustik')) > 0
+
+
+
+        $this->response->addHeader('Content-Type: application/json');
+        $this->response->setOutput(json_encode($json));
+    }
+
+}

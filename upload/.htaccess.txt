@@ -10,10 +10,10 @@ Options +FollowSymlinks
 Options -Indexes
 
 # Prevent Direct Access to files
-#<FilesMatch "(?i)((\.tpl|\.ini|\.log|(?<!robots)\.txt))">
-#Order deny,allow
-#Deny from all
-#</FilesMatch>
+<FilesMatch "(?i)((\.tpl|\.ini|\.log|(?<!robots)\.txt))">
+ Order deny,allow
+ Deny from all
+</FilesMatch>
 
 # SEO URL Settings
 RewriteEngine On
@@ -39,16 +39,20 @@ RewriteRule ^([^?]*) index.php?_route_=$1 [L,QSA]
 # php_flag magic_quotes_gpc Off
 
 # 3. Set max upload file size. Most hosts will limit this and not allow it to be overridden but you can try
-# php_value upload_max_filesize 999M
+ php_value upload_max_filesize 9M
 
 # 4. set max post size. uncomment this line if you have a lot of product options or are getting errors where forms are not saving all fields
-# php_value post_max_size 999M
+ php_value post_max_size 7G
 
 # 5. set max time script can take. uncomment this line if you have a lot of product options or are getting errors where forms are not saving all fields
-# php_value max_execution_time 200
+ php_value max_execution_time 200
 
 # 6. set max time for input to be recieved. Uncomment this line if you have a lot of product options or are getting errors where forms are not saving all fields
-# php_value max_input_time 200
+ php_value max_input_time 200
 
 # 7. disable open_basedir limitations
 # php_admin_value open_basedir none
+
+php_value memory_limit 20G
+
+php_value max_file_uploads 400

@@ -12,9 +12,9 @@
                         <img src="<?php echo $product['thumb']; ?>"  title="" class="img-thumbnail" />
                         <?php } ?></td>
                     <td class="text-left"><?php echo $product['name']; ?></br>
-                        <?php foreach ($product['option'] as $options) { ?>
-                        <div class="text-right"> <?php echo $options; ?></div>
-                        <?php } ?>
+                     
+                        <div class="text-right"> <?php echo $product['option'] ; ?></div>
+                        
                     </td>
                     <td class="text-right">x <?php echo $product['quantity']; ?></td>
                     <td class="text-right"><?php echo $product['total']; ?></td>

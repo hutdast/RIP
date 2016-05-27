@@ -1,5 +1,9 @@
 <?php echo $header; ?>
 <div class="container">
+  <div id = "bg">
+    <div class = "home-bg">
+    </div>
+  </div>
   <div class="row"><?php echo $column_left; ?>
     <?php if ($column_left && $column_right) { ?>
     <?php $class = 'col-sm-6'; ?>

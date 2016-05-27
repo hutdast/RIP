@@ -1,7 +1,14 @@
 <?php
 
 class ModelCatalogProduct extends Model {
-
+	
+	//RIP modifications: get Packages
+    public function getPackages() {
+        $sql = "SELECT * FROM apackage";
+        $query = $this->db->query($sql);
+        return $query->rows;
+    }
+	
     //RIP modifications to get categories
     public function getCategory() {
         $sql = "SELECT * FROM category";
@@ -36,6 +43,11 @@ class ModelCatalogProduct extends Model {
         return $query;
     }
 
+
+ public function getProduct($x) {
+       
+        
+    }
     //RIP modifications ends
 
 

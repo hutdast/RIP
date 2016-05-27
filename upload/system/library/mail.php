@@ -23,6 +23,18 @@ class Mail {
 			$this->$key = $value;
 		}
 	}
+	//RIP modifications: checking the sender and receiver
+	public function getTo(){
+	return $this->to;
+	}
+
+	 public function getFrom(){
+        return $this->from;
+        }
+
+
+
+
 
 	public function setTo($to) {
 		$this->to = $to;
@@ -94,16 +106,23 @@ class Mail {
 
 		if ($this->protocol != 'mail') {
 			$header .= 'To: ' . $to . $this->newline;
-			$header .= 'Subject: =?UTF-8?B?' . base64_encode($this->subject) . '?=' . $this->newline;
+			//$header .= 'Subject: =?UTF-8?B?' . base64_encode($this->subject) . '?=' . $this->newline;
+
+			$header .= 'Content-Type: multipart/related; boundary="' . $boundary . '"' . $this->newline;
 		}
 
 		$header .= 'Date: ' . date('D, d M Y H:i:s O') . $this->newline;
-		$header .= 'From: =?UTF-8?B?' . base64_encode($this->sender) . '?=' . ' <' . $this->from . '>' . $this->newline;
+		
+                $header .= 'From: admin@rustikimagephotography.com ' . $this->newline;
 		
 		if (!$this->reply_to) {
-			$header .= 'Reply-To: =?UTF-8?B?' . base64_encode($this->sender) . '?=' . ' <' . $this->from . '>' . $this->newline;
+			
+                        $header .= 'Reply-To: ' . $this->sender . ' <' . $this->from . '>' . $this->newline;
+
 		} else {
-			$header .= 'Reply-To: =?UTF-8?B?' . base64_encode($this->reply_to) . '?=' . ' <' . $this->reply_to . '>' . $this->newline;
+
+                        $header .= 'Reply-To: ' . $this->reply_to . ' <' . $this->reply_to . '>' . $this->newline;
+
 		}
 		
 		$header .= 'Return-Path: ' . $this->from . $this->newline;

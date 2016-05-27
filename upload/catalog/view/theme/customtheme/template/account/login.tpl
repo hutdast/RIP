@@ -1,5 +1,5 @@
 <?php echo $header; ?>
-<div class="container login-bg">
+<div class="container">
   <ul class="breadcrumb">
     <?php foreach ($breadcrumbs as $breadcrumb) { ?>
     <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
@@ -39,15 +39,10 @@
               <?php if ($redirect) { ?>
               <input type="hidden" name="redirect" value="<?php echo $redirect; ?>" />
               <?php } ?>
-         <!--   </form>-->
-          </div>   
-        </div>         
+            </form>
+          </div>
+        </div>
       </div>
-       
-        
-        
-        
-      </form>    
       <?php echo $content_bottom; ?></div>
    </div>
 </div>

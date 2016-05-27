@@ -1,7 +1,28 @@
 <?php
 class ModelCustomerCustomer extends Model {
-	public function addCustomer($data) {
-		$this->db->query("INSERT INTO " . DB_PREFIX . "customer SET customer_group_id = '" . (int)$data['customer_group_id'] . "', firstname = '" . $this->db->escape($data['firstname']) . "', lastname = '" . $this->db->escape($data['lastname']) . "', email = '" . $this->db->escape($data['email']) . "', telephone = '" . $this->db->escape($data['telephone']) . "', fax = '" . $this->db->escape($data['fax']) . "', custom_field = '" . $this->db->escape(isset($data['custom_field']) ? json_encode($data['custom_field']) : '') . "', newsletter = '" . (int)$data['newsletter'] . "', salt = '" . $this->db->escape($salt = token(9)) . "', password = '" . $this->db->escape(sha1($salt . sha1($salt . sha1($data['password'])))) . "', status = '" . (int)$data['status'] . "', approved = '" . (int)$data['approved'] . "', safe = '" . (int)$data['safe'] . "', date_added = NOW(), folder_name = '" .$data['folder_name'] . "'");
+    //RIP modifications:
+    public function hasFolder($param) {
+        $exist = false;
+        $query = $this->db->query("SELECT folder_name FROM " . DB_PREFIX . "customer WHERE folder_name = '" . $param['folder_name'] 
+                . "' AND email = '".$param['email']."'");
+        if ($query->num_rows) {
+            $exist = true;
+        }
+        return $exist;
+    }
+
+    public function addCustomer($data) {
+		$this->db->query("INSERT INTO " . DB_PREFIX . "customer SET customer_group_id = '" 
+                        . (int)$data['customer_group_id'] . "', firstname = '" 
+                        . $this->db->escape($data['firstname']) . "', lastname = '"
+                        . $this->db->escape($data['lastname']) . "', email = '"
+                        . $this->db->escape($data['email']) . "', telephone = '" 
+                        . $this->db->escape($data['telephone']) . "', fax = '" 
+                        . $this->db->escape($data['fax']) . "', salt = '" . $this->db->escape($salt = token(9)) . "', password = '" 
+                        . $this->db->escape(sha1($salt . sha1($salt . sha1($data['password'])))) 
+                        . "', status = '" . (int)$data['status'] . "', approved = '" . (int)$data['approved'] 
+                        . "',date_added = NOW(), folder_name = '" 
+                        .$data['folder_name'] . "'");
 
 		$customer_id = $this->db->getLastId();
 
@@ -19,23 +40,24 @@ class ModelCustomerCustomer extends Model {
 	}
 
 	public function editCustomer($customer_id, $data) {
+            
 		if (!isset($data['custom_field'])) {
 			$data['custom_field'] = array();
 		}
-        //RIP modifications: make the editCustomer flexible in order to use in dashboard.php
-        if(isset($data['firstname'])){
-            $this->db->query("UPDATE " . DB_PREFIX . "customer SET customer_group_id = '"
-                             . (int)$data['customer_group_id'] . "', firstname = '" . $this->db->escape($data['firstname'])
-                             . "', lastname = '" . $this->db->escape($data['lastname']) . "', email = '" . $this->db->escape($data['email'])
-                             . "', telephone = '" . $this->db->escape($data['telephone']) . "', fax = '" . $this->db->escape($data['fax'])
-                             . "', custom_field = '" . $this->db->escape(isset($data['custom_field']) ? json_encode($data['custom_field']) : '')
-                             . "', newsletter = '" . (int)$data['newsletter'] . "', status = '" . (int)$data['status'] . "', approved = '"
-                             . (int)$data['approved'] . "', safe = '" . (int)$data['safe'] . "', folder_name = '" . $data['folder_name']
-                             . "'  WHERE customer_id = '" . (int)$customer_id . "'");
-        }elseif (isset($data['status'])) {
-            $this->db->query("UPDATE " . DB_PREFIX . "customer SET status = '" . (int)$data['status'] . "'");
+                //RIP modifications: make the editCustomer flexible in order to use in dashboard.php
+if(isset($data['firstname'])){
+   $this->db->query("UPDATE " . DB_PREFIX . "customer SET customer_group_id = '" 
+                        . (int)$data['customer_group_id'] . "', firstname = '" . $this->db->escape($data['firstname'])
+                        . "', lastname = '" . $this->db->escape($data['lastname']) . "', email = '" . $this->db->escape($data['email']) 
+                        . "', telephone = '" . $this->db->escape($data['telephone']) . "', fax = '" . $this->db->escape($data['fax'])
+                        . "', custom_field = '" . $this->db->escape(isset($data['custom_field']) ? json_encode($data['custom_field']) : '') 
+                    . "', status = '" . (int)$data['status'] . "', approved = '" 
+                        . (int)$data['approved'] . "', folder_name = '" . $data['folder_name']
+                        . "'  WHERE customer_id = '" . (int)$customer_id . "'"); 
+}elseif (isset($data['status'])) {
+             $this->db->query("UPDATE " . DB_PREFIX . "customer SET status = '" . (int)$data['status'] . "'");
         }
-        //RIP modifications:End.
+	//RIP modifications:End.	
 
 		if ($data['password']) {
 			$this->db->query("UPDATE " . DB_PREFIX . "customer SET salt = '" . $this->db->escape($salt = token(9)) . "', password = '" . $this->db->escape(sha1($salt . sha1($salt . sha1($data['password'])))) . "' WHERE customer_id = '" . (int)$customer_id . "'");

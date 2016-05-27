@@ -22,9 +22,12 @@ class Image {
 				$this->image = imagecreatefromgif($file);
 			} elseif ($this->mime == 'image/png') {
 				$this->image = imagecreatefrompng($file);
-			} elseif ($this->mime == 'image/jpeg') {
+			} elseif ($this->mime == 'image/jpeg' || $this->mime == 'image/JPG') {
 				$this->image = imagecreatefromjpeg($file);
+			}elseif ($this->mime == 'image/bmp' || $this->mime == 'image/BMP') {
+				$this->image = imagecreatefromwbmp($file);
 			}
+                        
 		} else {
 			exit('Error: Could not load image ' . $file . '!');
 		}
@@ -60,13 +63,15 @@ class Image {
 		$extension = strtolower($info['extension']);
 
 		if (is_resource($this->image)) {
-			if ($extension == 'jpeg' || $extension == 'jpg') {
+			if ($extension == 'jpeg' || $extension == 'jpg' || $extension == 'JPG') {
 				imagejpeg($this->image, $file, $quality);
 			} elseif ($extension == 'png') {
 				imagepng($this->image, $file);
 			} elseif ($extension == 'gif') {
 				imagegif($this->image, $file);
-			}
+			} elseif ($extension == 'bmp' || $extension == 'BMP'){
+                            imagewbmp($this->image, $file);
+                        }
 
 			imagedestroy($this->image);
 		}

@@ -21,6 +21,51 @@
       <button type="button" class="close" data-dismiss="alert">&times;</button>
     </div>
     <?php } ?>
+    
+      <!-- RIP modifications: The entries for Freshbooks credentials -->
+    <div class="panel panel-default">
+      <div class="panel-heading" data-toggle="collapse" data-target="#body-fresh">
+        <h3 class="panel-title"><i class="fa fa-keyboard-o"></i> Freshbooks API entry</h3>
+      </div>
+        
+        <div class="panel-body collapse"  id="body-fresh" >
+            
+            <form action="<?php echo $form_action; ?>" method="post" enctype="multipart/form-data" id="form-fresh" class="form-horizontal">  
+             <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-freshbooks-url"><?php echo $entry_freshbooks_url; ?></label>
+            <div class="col-sm-10">
+              <input  type="text" name="freshbooks_url" value="<?php echo $freshbooks_url; ?>" placeholder="<?php echo $entry_freshbooks_url; ?>" id="input-freshbooks-url" class="form-control" />
+            </div>
+          </div>
+            
+             <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-freshbooks-key"><?php echo $entry_freshbooks_key; ?></label>
+            <div class="col-sm-10">
+              <input  type="text" name="freshbooks_key" value="<?php echo $freshbooks_key; ?>" placeholder="<?php echo $entry_freshbooks_key; ?>" id="input-freshbooks-key" class="form-control" />
+            </div>
+          </div>
+            
+          <div class="form-group">            
+                <div class=" pull-right">
+                    <button id="btn-fresh"  type="submit" form="form-fresh"class="btn btn-primary"  >Save API <i id="save-api" style="display: none;" class="fa fa-spinner fa fa-pulse"></i></button>
+            </div>   
+            </div>
+            
+            
+            </form>
+         
+        </div>
+    </div><!-- End of initial entry -->
+    
+
+           <!-- RIP modifications: The entries for Freshbooks credentials End.-->
+    
+    
+    
+    
+    
+    
+    
     <div class="panel panel-default">
       <div class="panel-heading">
         <h3 class="panel-title"><i class="fa fa-list"></i> <?php echo $text_list; ?></h3>
@@ -70,3 +115,40 @@
   </div>
 </div>
 <?php echo $footer; ?>
+
+<script type="text/javascript">
+    
+    $('#btn-fresh').on('click',function(){
+        var freshbooksUrl = $('input[name=\'freshbooks_url\']').val();
+        var freshbooksKey = $('input[name=\'freshbooks_key\']').val();
+  
+     $.ajax({
+            url: '<?php echo $form_action; ?>',
+          type: 'post',
+	dataType: 'html',
+	data: {
+            freshbooks_url : freshbooksUrl,
+            freshbooks_key : freshbooksKey
+        },
+		
+            beforeSend: function () {
+              $("#save-api").show();
+            },
+            complete: function () {
+                
+                $("#save-api").hide();
+            },
+            success: function () {
+             $("#btn-fresh").text("Freshbooks API is saved");
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                alert('The API was not recorded into the database');
+            }
+        });
+    
+    });
+    
+    
+   
+    
+</script>

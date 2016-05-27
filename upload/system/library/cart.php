@@ -39,7 +39,7 @@ class Cart {
 
         return $tax_data;
     }
-    //RIP modification: There are no recurring products therefore whenever this function is called it will return empty array
+ //RIP modification: There are no recurring products therefore whenever this function is called it will return empty array
     public function getRecurringProducts() {
         $product_data = array();
         
@@ -53,10 +53,11 @@ class Cart {
                 . (int) $this->customer->getId() . "' AND session_id = '" . $this->db->escape($this->session->getId()) . "'");
 
         foreach ($cart_query->rows as $cart) {
-            $recur = '';
+         $recur = '';
             if($cart['recurring_id']){
                 $recur = $cart['recurring_id'];
             }
+
             $product_data[] = array(
                 'cart_id' => $cart['cart_id'],
                 'product_id' => $cart['product_id'],
@@ -118,6 +119,7 @@ class Cart {
     }
 
     
+
     public function getWeight() {
         $weight = 0;
         /**
@@ -186,7 +188,7 @@ class Cart {
 
     public function hasShipping() {
 
-        $shipping = false;
+        $shipping = true;
         /**
           foreach ($this->getProducts() as $product) {
           if ($product['shipping']) {

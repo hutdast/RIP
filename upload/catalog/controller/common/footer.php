@@ -44,11 +44,11 @@ class ControllerCommonFooter extends Controller {
 		$data['order'] = $this->url->link('account/order', '', 'SSL');
 		$data['wishlist'] = $this->url->link('account/wishlist', '', 'SSL');
 		$data['newsletter'] = $this->url->link('account/newsletter', '', 'SSL');
-        
-        
-        //Name of the store => $this->config->get('config_name')
+
+		 //Name of the store => $this->config->get('config_name')
         //RIP modifications: change to rustik copyrighted for the front store
 		$data['copyrighted'] = sprintf($this->language->get('copyrighted'), date('Y', time()));
+
 
 		// Whos Online
 		if ($this->config->get('config_customer_online')) {

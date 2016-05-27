@@ -82,6 +82,61 @@ class ControllerCheckoutSuccess extends Controller {
 		$data['content_bottom'] = $this->load->controller('common/content_bottom');
 		$data['footer'] = $this->load->controller('common/footer');
 		$data['header'] = $this->load->controller('common/header');
+		
+		
+		 //freshbooks
+                $this->load->model('checkout/order');
+                 $invoice_id = $this->model_checkout_order->getInvoice_num($this->customer->getCustomField());
+                 
+                $poststring='';
+                  $client_request = explode("~!", $this->db->freshbooks('mail')['request']);
+            $client_info_index = 0;
+           $client_info = array(intval($invoice_id));
+           
+            foreach ($client_request as $request_value) {
+                $poststring .= $request_value;
+                if ($client_info_index < count($client_info)) {
+                    $poststring .= $client_info[$client_info_index];
+                }
+
+                $client_info_index++;
+            }
+           
+
+             $data['invoice'] ='';  
+            $api = array();
+//             //if there are not API in database
+            if(count($this->model_checkout_order->getFresbooks('rustik')) > 0 ){
+               $api =  $this->model_checkout_order->getFresbooks('rustik');
+            //Start the request for creating a freshbook client using the billing info shipping info will be part of the invoice creation
+        
+           $curl = curl_init();
+            curl_setopt($curl, CURLOPT_URL, $api['freshbooks_url']);
+            curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+            curl_setopt($curl, CURLOPT_TIMEOUT, 40);
+            curl_setopt($curl, CURLOPT_POSTFIELDS, $poststring);
+            curl_setopt($curl, CURLOPT_USERPWD, $api['freshbooks_key']);
+            curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+            $result = curl_exec($curl);
+            $errmsg = curl_error($curl);
+            $cInfo = curl_getinfo($curl);
+            curl_close($curl);
+
+	if(strpos($result,'<?xml') != false  ){
+            $response = json_decode(json_encode(simplexml_load_string($result)), true);
+           
+             
+            if ($response['@attributes']['status'] == 'ok') {
+            
+         $data['invoice'] = 'An invoice is sent to your mailbox';
+        } else{
+           $data['invoice'] = '<span style="color: red">There is an error processing your payment Contact store owner</span>'; 
+        }
+	
+	}//End of activation checked
+
+   }//End of count($this->model_setting_setting->getFresbooks('rustik')) > 0 
+		
 
 		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/common/success.tpl')) {
 			$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/common/success.tpl', $data));

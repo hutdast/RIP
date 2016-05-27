@@ -3,7 +3,7 @@
 $_['heading_title']          = 'Packages';
 
 // Text
-$_['text_success']           = 'Success: You have modified categories!';
+$_['text_success']           = 'Success: You have modified Packages!';
 $_['text_list']              = 'Package List';
 $_['text_add']               = 'Add Package';
 $_['text_edit']              = 'Edit Package';
@@ -34,12 +34,12 @@ $_['entry_layout']           = 'Layout Override';
 // Help
 $_['help_filter']            = '(Autocomplete)';
 $_['help_keyword']           = 'Do not use spaces, instead replace spaces with - and make sure the keyword is globally unique.';
-$_['help_top']               = 'Display in the top menu bar. Only works for the top parent categories.';
-$_['help_column']            = 'Number of columns to use for the bottom 3 categories. Only works for the top parent categories.';
+$_['help_top']               = 'Display in the top menu bar. Only works for the top parent Packages.';
+$_['help_column']            = 'Number of columns to use for the bottom 3 Packages. Only works for the top parent Packages.';
 
 // Error
 $_['error_warning']          = 'Warning: Please check the form carefully for errors!';
-$_['error_permission']       = 'Warning: You do not have permission to modify categories!';
+$_['error_permission']       = 'Warning: You do not have permission to modify Packages!';
 $_['error_name']             = 'Package Name must be between 2 and 255 characters!';
 $_['error_meta_title']       = 'Meta Title must be greater than 3 and less than 255 characters!';
 $_['error_keyword']          = 'SEO keyword already in use!';

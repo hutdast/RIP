@@ -81,6 +81,9 @@ class ControllerExtensionPayment extends Controller {
 		$data['text_list'] = $this->language->get('text_list');
 		$data['text_no_results'] = $this->language->get('text_no_results');
 		$data['text_confirm'] = $this->language->get('text_confirm');
+ //RIP modifications:
+                 $data['entry_freshbooks_url'] = 'Freshbooks API URL: ';
+                $data['entry_freshbooks_key'] = 'Freshbooks API Key: ';
 
 		$data['column_name'] = $this->language->get('column_name');
 		$data['column_status'] = $this->language->get('column_status');
@@ -119,6 +122,16 @@ class ControllerExtensionPayment extends Controller {
 
 		$data['extensions'] = array();
 
+ //RIP modifications: taking the entries of URL and API keys of Freshbooks
+               $this->load->model('setting/setting');
+		$data['freshbooks_url'] = '';
+                 $data['freshbooks_key'] = '';
+                $data['form_action']  = "index.php?route=extension/payment/addFreshbooks&token="
+                        .$this->session->data['token'];
+                 $data['redirect_token']  = "index.php?route=extension/payment&token=".$this->session->data['token'];
+		$data['extensions'] = array();
+                $data['freshbooks_apis'] = $this->model_setting_setting->getAPIs();
+
 		$files = glob(DIR_APPLICATION . 'controller/payment/*.php');
 
 		if ($files) {
@@ -154,6 +167,33 @@ class ControllerExtensionPayment extends Controller {
 
 		$this->response->setOutput($this->load->view('extension/payment.tpl', $data));
 	}
+	
+	
+         public function addFreshbooks() {
+            $this->load->model('setting/setting');
+            $json = array();
+             //RIP modifications: taking the entries of URL and API keys of Freshbooks
+            $invoice = array();
+            
+            
+                if ($this->request->post['freshbooks_url'] && $this->request->post['freshbooks_key']) {
+                    $invoice['freshbooks_url'] = $this->request->post['freshbooks_url'];
+                    $invoice['freshbooks_key'] = $this->request->post['freshbooks_key'];
+                  $invoice['api_tag'] = 'rustik';
+                  
+                 if(count($this->model_setting_setting->getFresbooks('rustik')) < 1 ){
+                      $this->model_setting_setting->setFresbooks($invoice); 
+                $error['freshbooks'] = 'Freshbooks API is saved';
+                  }
+               
+		}else{
+                    $error['freshbooks'] = 'Freshbooks API is not saved';
+                }
+                
+               $this->index();
+                
+
+        }
 
 	protected function validate() {
 		if (!$this->user->hasPermission('modify', 'extension/payment')) {

@@ -245,26 +245,24 @@ class ControllerCheckoutCart extends Controller {
         if (isset($this->request->post['product_info'])) {
             $product_info = $this->request->post['product_info'];
 
-            //Split the info between description and price then push in a 'dictionary' called options
-            $options = array();
+             //Split the info between description and price then push in a 'dictionary' called options
+            $all_products = array();
             $price = 0;
             foreach ($product_info[1] as $item) {
                 $arr = explode("~!", $item);
-                //split with colon and space
-                array_push($options, $arr[0] . ": " . $arr[2]);
-                $price += $arr[1];
-            }
-            //Prep the data for database
+                //Prep the data for database
             $product = array('product_name' => $product_info[0],
-                'description' => $options,
-                'price' => $price,
+                'description' => $arr[0] . ": " . $arr[2],
+                'price' => $arr[1],
                 'customer_id' => $product_info[2],
                 'quantity' => 1);
-            //Get addProduct method into catalog/product to capture the array of info of the newly created product
+              //Get addProduct method into catalog/product to capture the array of info of the newly created product
             $this->model_catalog_product->addProduct($product);
 
             //Add product info into the system/cart
             $this->cart->add($product);
+                
+            }
         } else {
             $product_info = array();
         }
@@ -289,8 +287,7 @@ class ControllerCheckoutCart extends Controller {
         }
 
 
-        $json['total'] = sprintf($this->language->get('text_items'), $this->cart->countProducts(), "$".$total);
-      
+        $json['total'] = sprintf($this->language->get('text_items'), $this->cart->countProducts(), $this->currency->format($total));
         //Answer to Front end
         $this->response->addHeader('Content-Type: application/json');
         $this->response->setOutput(json_encode($json));

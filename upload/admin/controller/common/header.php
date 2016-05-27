@@ -2,10 +2,7 @@
 class ControllerCommonHeader extends Controller {
 	public function index() {
 		$data['title'] = $this->document->getTitle();
-//RIP modification
-                if(!$this->user->isLogged()){
-                    unset($this->session->data['token']);
-                }
+
 		if ($this->request->server['HTTPS']) {
 			$data['base'] = HTTPS_SERVER;
 		} else {
@@ -23,7 +20,7 @@ class ControllerCommonHeader extends Controller {
 		$this->load->language('common/header');
 
 		$data['heading_title'] = $this->language->get('heading_title');
-
+	
 		$data['text_order'] = $this->language->get('text_order');
 		$data['text_processing_status'] = $this->language->get('text_processing_status');
 		$data['text_complete_status'] = $this->language->get('text_complete_status');
@@ -46,15 +43,13 @@ class ControllerCommonHeader extends Controller {
 
 		if (!isset($this->request->get['token']) || !isset($this->session->data['token']) || ($this->request->get['token'] != $this->session->data['token'])) {
 			$data['logged'] = '';
-
-			//$data['home'] = $this->url->link('common/dashboard', '', 'SSL');
+			$data['admin'] = ' to Admin Login';	
+			$data['home'] = $this->url->link('common/dashboard', '', 'SSL');
 		} else {
 			$data['logged'] = true;
-
+			$data['admin'] = $this->user->getUserName();
 			$data['home'] = $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL');
-                       
-                       
-			$data['logout'] = $this->url->link('common/logout', 'token=' . $this->session->data['token'] , 'SSL');
+			$data['logout'] = $this->url->link('common/logout', 'token=' . $this->session->data['token'], 'SSL');
 
 			// Orders
 			$this->load->model('sale/order');

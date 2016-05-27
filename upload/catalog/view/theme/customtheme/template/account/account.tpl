@@ -10,11 +10,6 @@
     <?php if ($success) { ?>
     <div class="alert alert-success"><i class="fa fa-check-circle"></i> <?php echo  $success; ?> </div>
     <?php } ?>
- 
-    <div class="button-group pull-center" ><!-- Changing the view from ro to carousel -->
-        <button type="button" class="btn-primary" onclick="changeView();"   data-toggle="tooltip" data-title="Click to change from rows to carousel view">Change View</button>
-    </div><!-- Changing the view from ro to carousel end.-->
- 
 
     
      <div  class="row"  ><!-- Row displays begins -->
@@ -22,33 +17,23 @@
         <?php foreach($pictures as $pic){ ?> 
         <div class="product-layout col-lg-3 col-md-3 col-sm-6 col-xs-12 " >
             <div class="product-thumb transition ">
-                <div class="image"  ><img src="<?php echo $pic; ?>"  class="img-responsive photo-size"  style="width: 300px;height:115px;" 
+                
+                <div class="image"  ><img src="<?php echo $pic['source']; ?>"  class=" photo-size"  
+                                           
                                                data-toggle="tooltip" data-title="Click image to enlarge" ></div>
 
                 <div > 
 
-                     <button  type="button" class="btn-primary" data-toggle="tooltip" onclick="wishlist.add('<?php echo $pic; ?>');" data-title="Add to Wish List">WishList</button>
-                    <button type="button" id="<?php echo $pic; ?>" class="createProduct btn-primary" data-toggle="tooltip" data-title="Select Options"><i class="fa fa-shopping-cart"></i></button>
+                     <button id="<?php echo $pic['source'].'wishbtn'; ?>"  type="button" class="btn-primary wishlistbtn" data-toggle="tooltip" onclick="wishlist.add('<?php echo $pic['source']; ?>');" data-title="Add to Wish List">WishList</button>
+                    <button type="button" id="<?php echo $pic['source']; ?>" class="createProduct btn-primary" data-toggle="tooltip" data-title="Select Options"><i class="fa fa-shopping-cart"></i></button>
 
-                      <!-- Check which one of those pics are already in the cart therefore viewed -->
+                     
+                    
+                    <i id="<?php echo $pic['source'].'cart'; ?>"  class="fa fa-check-circle cart"  style="color: blue;display:none">Cart</i> 
 
-                    <?php foreach($cart_products as $productName){ ?>
-
-                    <?php if($pic == $productName['name']){ ?> 
-
-                    <i class="fa fa-check-circle "  style="color: blue;">Cart</i> 
-
-                    <?php break; } ?>
-
-                    <?php }?>
-                    <!-- Check which one of those pics are already in the cart therefore viewed  ENd.-->
-                      <!-- Check which one of those pics are already in the wishlist  -->
-                    <?php foreach($wishlist as $wish){ ?>
-                    <?php if($pic == $wish['product_name']){ ?> 
-                    <i class="fa fa-heart" style="color: red;"></i>
-                    <?php break; } ?>
-
-                    <?php }?>
+                 
+                    <i id="<?php echo $pic['source'].'wish'; ?>"  class="fa fa-heart wishlist" style="color: red;display:none;"></i>
+                    
 
                     <!-- Wish List  ENd.-->
                 </div>
@@ -60,47 +45,7 @@
        
     </div><!-- Row displays ends. -->
 
-    <div class="owl-carousel" style="background:transparent"><!--Carousel displays begins. -->
-         <?php foreach($pictures as $pic){ ?> 
-         <div  class="owl-lazy" data-src="<?php echo $pic; ?>" >
-            <div class="product-thumb transition">
-                <div class="pull-center"><img src="<?php echo $pic; ?>"  class="img-responsive photo-size"    
-                                               data-toggle="tooltip" data-title="Click image to enlarge" ></div>
-
-                <div class="pull-center" > 
-
-                    
-
-                      <!-- Check which one of those pics are already in the cart therefore viewed -->
-
-                    <?php foreach($cart_products as $productName){ ?>
-
-                    <?php if($pic == $productName['name']){ ?> 
-
-                    <i class="fa fa-check-circle "  style="color: blue;">Cart</i> 
-
-                    <?php break; } ?>
-
-                    <?php }?>
-                    <!-- Check which one of those pics are already in the cart therefore viewed  ENd.-->
-                      <!-- Check which one of those pics are already in the wishlist  -->
-                    <?php foreach($wishlist as $wish){ ?>
-                    <?php if($pic == $wish['product_name']){ ?> 
-                    <i class="fa fa-heart" style="color: red;"></i>
-                    <?php break; } ?>
-
-                    <?php }?>
-
-                    <!-- Wish List  ENd.-->
-                </div>
-
-            </div>
-
-         </div>
-        <?php } ?>
-        
-        
-    </div><!--Carousel displays ends. -->
+ 
 
 
     
@@ -159,12 +104,8 @@
 
 </div>
 
-<div id="photo-display" style="display:none;">
-    <img src="" id="full-figure" />
-    <br />
-   
-    <div  class="pull-right"><i class="fa fa-expand " data-toggle="tooltip" data-title="Expand window here as you wish"></i></div>
-    
+<div id="photo-display" style="display: none;" >
+ 
 </div>
 <!-- //RIP modifications End.  -->
 <?php echo $footer; ?>
@@ -172,8 +113,61 @@
 <script type="text/javascript">
     //RIP Modifications:
 $(function(){
+     markWish();
+    markCart('initial');
     $('.owl-carousel').hide();
 });
+
+//Wishlist function for icon
+    function markWish(){
+        <?php foreach($wishlist as $wish){ ?>
+                $('.wishlist').each(function(){
+                    if( $(this).attr('id') == "<?php echo $wish['product_name'].'wish'; ?>" )
+                    {
+                       $(this).show();
+                    }
+        });
+      <?php }?>  
+    }
+      
+      //Cart function for icon
+      function markCart(param){
+         if(param == 'initial'){
+         <?php foreach($cart_products as $productName){ ?>
+           $('.cart').each(function(){
+                    if( $(this).attr('id') == "<?php echo $productName['name'].'cart'; ?>" )
+                    {
+                       $(this).show();
+                    }
+        });
+          <?php }?> 
+             
+             }else{
+                 $('.cart').each(function(){
+                    if( $(this).attr('id') == param+'cart')
+                    {
+                       $(this).show();
+                    }
+        });
+                 
+             }
+      
+      }
+        
+       //Wish onclick to activate wish icon                               
+   $('.wishlistbtn').on('click',function(){
+        var nameParts =  $(this).attr('id').split('wishbtn');
+       var id = nameParts[0]+'wish';
+       $('.wishlist').each(function(){
+                    if( $(this).attr('id') == id )
+                    {
+                       $(this).show();
+                    }
+        });
+      });                                
+
+
+
 
     $('.createProduct').on('click', function(){
  
@@ -200,13 +194,13 @@ $(function(){
          
     var checkboxValue = $(this).val();
     //Loop thru all the options
-    <?php foreach($cart['option'] as $option){ ?>
-            var option = '<?php echo $option; ?>'.split(': ');
+   
+            var option = '<?php echo $cart['option']; ?>'.split(': ');
     if (checkboxValue.indexOf(option[0]) >= 0 && checkboxValue.indexOf(option[1]) >= 0 ){
     $(this).prop('checked', true);
     options.push(checkboxValue);
     }
-    <?php } ?>
+   
     });
     }//End of if statement
     <?php } ?>
@@ -255,9 +249,7 @@ $(function(){
                     } else {
                     alert('You did not make any choices!');
                     }
-                   
-
-                    location = 'index.php?route=account/account';
+                    markCart(params[0]);
                     $(this).dialog("close");
                     }
 
@@ -272,54 +264,30 @@ $(function(){
     });
                                            
     $('.photo-size').on('click', function(){
-
        
     var src = $(this).attr('src');
-    
+
             $("#photo-display").dialog({
     open: function () {
-      
-    $("#full-figure").attr('src', src);
-    $("#full-figure").attr('style',"width: "+$(this).width()+"px;");
+      $("#photo-display").css({"background-image":"url("+src+")","background-repeat":"no-repeat","background-size":"90%"});
+     
+   
     },
-    dialogClass: 'dialog-class',
+    	 title: "Resize window by pulling bottom corners",
+            dialogClass: "dialog-style",
             width: $( window ).width() * 0.5,
-            
-            position: { my: "left top", at: "left top", of: window },
-             resize: function( event, ui ) {
-
-                   $("#full-figure").attr('style',"width: "+$(this).width()+"px;");
-                    $("#full-figure").attr('style',"height: "+$(this).height()*0.98+"px;");
-             }
-    });//end of dialog
+            height: $( window ).height() * 0.55,
+           
+          // position: { my: "center top", at: ("center top+"+(window.innerHeight*.1)) },
+             
+    }).prev(".ui-dialog-titlebar").css("background","rgba(0, 0, 0, 0.5)");//end of dialog
+    
+    
     });
     
     
 
-$('.owl-carousel').owlCarousel({
-    items:1,
-    lazyLoad:true,
-    loop:true,
-    autoWidth:true,
-    navigation : true,
-    navigationText : ["prev", "next"],
-    responsive : true,
-    responsiveRefreshRate : 200,
-    responsiveBaseWidth : window,
-    margin:10
-});
 
-function changeView(){
-    if(!$('.owl-carousel').is(':visible')){
-        $('.row').hide();
-        $('.owl-carousel').show();
-       
-    }else{
-        $('.row').show();
-        $('.owl-carousel').hide();
-    }
-    
-}
 
 
 
@@ -329,31 +297,7 @@ $('[data-toggle="tooltip"]').tooltip({
 });
 
 
-    /**
-     $( "#slider-range-max" ).slider({
-      range: "max",
-      min: 20,
-      max: 100,
-      value: 2,
-      slide: function( event, ui ) {
-          $( ".resizable" ).resizable({
-               resize: function( event, ui ) {
-    ui.size.height = Math.round( ui.size.height / 30 ) * 30;
-  },
-      alsoResize: ".also"
-    });
-     var w = ui.value /100;
-       // $("#gallery").attr('style',"width: "+$( window ).width() * w+"px;");
-        
-      }
-    });
-    
-    
-    /**
-    $(".photo-size").on('mouseout', function(){
-    $("#photo-display").dialog('close');
-    });
-**/
+   
 
 
 

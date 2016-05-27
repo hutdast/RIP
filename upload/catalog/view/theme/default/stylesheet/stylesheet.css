@@ -79,6 +79,7 @@
 	background-size: cover;
 }
 
+
 body {
       
 	font-family: 'Open Sans', sans-serif;
@@ -258,6 +259,10 @@ div.required .control-label:before {
 	#cart .dropdown-menu {
 		width: 100%;
 	}
+        .photo-size{
+                width: 350px;
+                height: auto;
+        }
 }
 #cart .dropdown-menu table {
 	margin-bottom: 10px;
@@ -388,6 +393,11 @@ div.required .control-label:before {
 		border-radius: 0;
 		color: #fff;
 	}
+         .photo-size{
+                width: 537px;
+                height: auto;
+        }
+        
 }
 /* content */
 #content {
@@ -651,7 +661,11 @@ footer h5 {
 .product-grid .product-thumb .caption {
 	min-height: 210px;
 	padding: 0 10px;
-}
+    }
+     .photo-size{
+                width: 345px;
+                height: 130px;
+        }
 }
 @media (max-width: 767px) {
 .product-list .product-thumb .caption {
@@ -739,7 +753,7 @@ h2.price {
 		width: 33.33%;
 	}
         .pull-center{
-        margin-left: 800px;
+        margin-left: 600px;
         padding-bottom: 10px;
     }
 }
@@ -776,6 +790,7 @@ h2.price {
 .thumbnails .image-additional {
 	float: left;
 	margin-left: 20px;
+       
 }
 
 @media (min-width: 1200px) {
@@ -786,6 +801,15 @@ h2.price {
 	#content .col-lg-6:nth-child(2n+1) {
 		clear:left;
 	}
+         .photo-size{
+                width: 260px;
+                height: 130px;
+        }
+        .pull-center{
+        margin-left: 800px;
+        padding-bottom: 10px;
+    }
+       
 }
 @media (min-width: 992px) and (max-width: 1199px) {
 	#content .col-md-2:nth-child(6n+1),
@@ -877,8 +901,6 @@ and (orientation : portrait)
    
 }
 
- .dialog-class .ui-widget-header  {
-background: blue;
-	
+ .dialog-style  .ui-widget-header .ui-icon {
+    background-color: blue;
 }
-

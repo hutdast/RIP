@@ -11,32 +11,13 @@ class DB {
 			exit('Error: Could not load database driver ' . $driver . '!');
 		}
 	}
-        
-        //RIP modifications: making freshbooks available to both admin and catalog section
-        public function freshbooks($param) {
+
+ public function freshbooks($param) {
                $result = $this->db->query("SELECT * FROM `" . DB_PREFIX . "freshbooks_request` WHERE name = '".$this->db->escape($param)."'"); 
 return  $result->row;
     }
-        
-        
-        public function log($param) {
-            /////////////////////////////////////////////////////////
-                ////////////////////////////////////////////////////////
-      
-                $string = $param. '\r\n';
-          
-                if(!is_writable("logger.txt")){
-                    die('there is a problem '.$string);
-                }else{
-                     $handle = fopen("logger.txt", 'a+');
-                     fwrite($handle, $string);
-                     fclose($handle);
-                }
-             
-                /////////////////////////////////////////////////////////
-                ////////////////////////////////////////////////////////
-        }
-        public function query($sql) {
+
+	public function query($sql) {
 		return $this->db->query($sql);
 	}
 

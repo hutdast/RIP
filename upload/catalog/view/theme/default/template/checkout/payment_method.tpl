@@ -33,13 +33,13 @@
         <input type="checkbox" name="agree" value="1" />
         <?php } ?>
         &nbsp;
-        <input type="button" value="<?php echo $button_continue; ?>" id="button-payment-method" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary" />
+         <i id="pay-method" style="display: none;" class="fa fa-spinner fa-pulse pull-right"></i> <input type="button" value="<?php echo $button_continue; ?>" id="button-payment-method" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary" />
     </div>
 </div>
 <?php } else { ?>
 <div class="buttons">
     <div class="pull-right">
-        <input type="button" value="<?php echo $button_continue; ?>" id="button-payment-method" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary" />
+        <i id="pay-method" style="display: none;" class="fa fa-spinner fa-pulse pull-right"></i>  <input type="button" value="<?php echo $button_continue; ?>" id="button-payment-method" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary" />
     </div>
 </div>
 <?php } ?>

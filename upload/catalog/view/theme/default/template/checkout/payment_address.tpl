@@ -23,7 +23,7 @@
             <input type="radio" name="payment_address" value="new" />
             <?php echo $text_address_new; ?></label>
 
-        <input type="button" value="<?php echo $button_continue; ?>" id="button-payment-address-existing" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary pull-right" />
+        <i id="pay-exist" style="display: none;" class="fa fa-spinner fa-pulse pull-right"></i><input type="button" value="<?php echo $button_continue; ?>" id="button-payment-address-existing" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary pull-right" />
 
     </div>
     <?php } ?>
@@ -96,7 +96,7 @@
 
         <div class="buttons clearfix">
             <div class="pull-right">
-                <input type="button" value="<?php echo $button_continue; ?>" id="button-payment-address" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary" />
+                <i id="pay-exist" style="display: none;" class="fa fa-spinner fa-pulse pull-right"></i><input type="button" value="<?php echo $button_continue; ?>" id="button-payment-address" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary" />
             </div>
         </div>
 

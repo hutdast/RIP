@@ -103,11 +103,7 @@ $registry->set('response', $response);
 $cache = new Cache('file');
 $registry->set('cache', $cache);
 
-                    // Cache
-$cache = new Cache('file');
-$registry->set('cache', $cache);
-
-                 // Session
+// Session
 $session = new Session();
 $registry->set('session', $session);
 

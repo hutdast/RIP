@@ -23,11 +23,9 @@ function getURLVar(key) {
 }
 
 $(document).ready(function() {
-    
 	//Form Submit for IE Browser
 	$('button[type=\'submit\']').on('click', function() {
 		$("form[id*='form-']").submit();
-                
 	});
 
 	// Highlight any found errors
@@ -144,7 +142,7 @@ $(document).ready(function() {
 			placement: 'right',
 			trigger: 'manual',
 			content: function() {
-				return '<button type="button" id="button-image" class="btn btn-primary"><i class="fa fa-pencil"></i></button>';
+				return '<button type="button" id="button-image" class="btn btn-primary"><i class="fa fa-pencil"></i></button> ';
 			}
 		});
 
@@ -187,8 +185,6 @@ $(document).ready(function() {
 		});
 	});
 
-    
-    
 	// tooltips on hover
 	$('[data-toggle=\'tooltip\']').tooltip({container: 'body', html: true});
 

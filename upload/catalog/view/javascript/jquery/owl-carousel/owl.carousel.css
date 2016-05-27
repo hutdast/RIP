@@ -18,16 +18,19 @@
 	position: relative;
 	width: 100%;
 	-ms-touch-action: pan-y;
+	max-height: 650px;
 }
 .owl-carousel .owl-wrapper {
 	display: none;
 	position: relative;
 	-webkit-transform: translate3d(0px, 0px, 0px);
+	max-height: 650px;
 }
 .owl-carousel .owl-wrapper-outer {
 	overflow: hidden;
 	position: relative;
 	width: 100%;
+	max-height: 650px;
 }
 .owl-carousel .owl-wrapper-outer.autoHeight {
 	-webkit-transition: height 500ms ease-in-out;
@@ -38,6 +41,7 @@
 }
 .owl-carousel .owl-item {
 	float: left;
+	max-height: 650px;
 }
 .owl-controls .owl-page, .owl-controls .owl-buttons div {
 	cursor: pointer;
@@ -108,7 +112,7 @@
 	right: 10px;
 }
 .owl-carousel .owl-buttons div i {
-	font-size: 40px;
+	font-size: 20px;
 	margin: -20px 0 0;
 }
 .owl-pagination {

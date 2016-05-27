@@ -1,6 +1,6 @@
 <?php
-class ControllerCommonContentTop extends Controller{
-    public function index() {
+class ControllerCommonContentTop extends Controller {
+	public function index() {
 		$this->load->model('design/layout');
 
 		if (isset($this->request->get['route'])) {
@@ -30,8 +30,6 @@ class ControllerCommonContentTop extends Controller{
 
 			$layout_id = $this->model_catalog_information->getInformationLayoutId($this->request->get['information_id']);
 		}
-        
-               
 
 		if (!$layout_id) {
 			$layout_id = $this->model_design_layout->getLayout($route);
@@ -46,9 +44,6 @@ class ControllerCommonContentTop extends Controller{
 		$data['modules'] = array();
 
 		$modules = $this->model_design_layout->getLayoutModules($layout_id, 'content_top');
-        
-       
-        
 
 		foreach ($modules as $module) {
 			$part = explode('.', $module['code']);
@@ -66,8 +61,6 @@ class ControllerCommonContentTop extends Controller{
 			}
 		}
 
-       
-        
 		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/common/content_top.tpl')) {
 			return $this->load->view($this->config->get('config_template') . '/template/common/content_top.tpl', $data);
 		} else {

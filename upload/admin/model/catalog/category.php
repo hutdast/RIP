@@ -1,7 +1,6 @@
 <?php
 class ModelCatalogCategory extends Model {
-    
-    //RIP modifications:
+//RIP modifications:
     public function addPackage($data) {
        $this->db->query("INSERT INTO apackage SET package_name = '" . $this->db->escape($data['package_name']) 
                 . "', price = '" . (double)$data['price']. "', descriptions ='".$this->db->escape($data['descriptions']) 
@@ -38,7 +37,11 @@ class ModelCatalogCategory extends Model {
         
     }
      //RIP modifications:End.
-    
+
+
+
+
+
 	public function addCategory($data) {
 		$this->event->trigger('pre.admin.category.add', $data);
 
@@ -100,10 +103,7 @@ class ModelCatalogCategory extends Model {
 	public function editCategory($category_id, $data) {
 		$this->event->trigger('pre.admin.category.edit', $data);
 
-		$this->db->query("UPDATE " . DB_PREFIX . "category SET parent_id = '" . (int)$data['parent_id'] . "', `top` = '" 
-                        . (isset($data['top']) ? (int)$data['top'] : 0) . "', `column` = '" . (int)$data['column'] . "', sort_order = '"
-                        . (int)$data['sort_order'] . "', status = '" . (int)$data['status'] . "', date_modified = NOW() WHERE category_id = '" 
-                        . (int)$category_id . "'");
+		$this->db->query("UPDATE " . DB_PREFIX . "category SET parent_id = '" . (int)$data['parent_id'] . "', `top` = '" . (isset($data['top']) ? (int)$data['top'] : 0) . "', `column` = '" . (int)$data['column'] . "', sort_order = '" . (int)$data['sort_order'] . "', status = '" . (int)$data['status'] . "', date_modified = NOW() WHERE category_id = '" . (int)$category_id . "'");
 
 		if (isset($data['image'])) {
 			$this->db->query("UPDATE " . DB_PREFIX . "category SET image = '" . $this->db->escape($data['image']) . "' WHERE category_id = '" . (int)$category_id . "'");

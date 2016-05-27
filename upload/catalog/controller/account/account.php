@@ -70,11 +70,8 @@ class ControllerAccountAccount extends Controller {
         $data['cart_products'] = $this->cart->getProducts();
         $this->load->model('account/wishlist');
         $data['wishlist'] = $this->model_account_wishlist->getWishlist();
-
-
-
-
-
+       
+        $data['content_top'] = $this->load->controller('common/content_top');
         $data['column_right'] = $this->load->controller('common/column_right');
         $data['footer'] = $this->load->controller('common/footer');
         $data['header'] = $this->load->controller('common/header');
@@ -96,18 +93,27 @@ class ControllerAccountAccount extends Controller {
         $allfiles = scandir($dir);
         $img_links = array();
         $counting = 0;
+       
         foreach ($allfiles as $image) {
             //if the file is not hidden get the the URI
-            if (substr($image, 0, 1) != '.') {
+            if (substr($image, 0, 1) != '.' ) {
                 //Once we get certified the config.php needs to be modified.
                 $modify_image = new Image( DIR_IMAGE."catalog/" . $folder . "/" . $image);
-                $modify_image->resize(190, 107);
-                $mark = new Image(DIR_IMAGE. "logo.png");
                 
-                $modify_image->watermark($mark);
+               // $mark = new Image(DIR_IMAGE. "logo.png");
+                 $width = $modify_image->getWidth() * 0.2;
+                 $height = $modify_image->getHeight() * 0.2;
+               // $mark->resize($width, $height);
+              // $modify_image->watermark($mark);
+		$size = $width * $height;
+	
+              
+
                 $modify_image->save($modify_image->getFile());
-                $img_links[$counting] = HTTPS_SERVER . "/image/catalog/" . $folder . "/" . $image;
-                $counting++;               
+                 $img_links[$counting]['source'] = HTTPS_SERVER . "/image/catalog/" . $folder . "/" . $image;
+                 $img_links[$counting]['width'] = $modify_image->getWidth();
+                  $img_links[$counting]['height'] = $modify_image->getHeight();
+                $counting++;
             }
         }
         return $img_links;

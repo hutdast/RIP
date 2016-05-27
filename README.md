@@ -1,5 +1,5 @@
 ### RIP Technologies
-RIP is a team of two [Armstrong State University](https://www.armstrong.edu) students: Charles Poole (designer) and Nikenson Midi (developer).
+RIP is a team of two [Armstrong State University](https://www.armstrong.edu) students: Charles Poole - designer and [Nikenson Midi - developer](http://klpnfamily.com/cv/nick).
 
 **** RIP Modifications *****
 

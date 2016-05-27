@@ -26,8 +26,8 @@
 
                         <div class="col-sm-2">
                             <div class="form-group">
-                                <label class="control-label" for="dim_id">Dimensions</label>
-                                <input type="text" name="dimensions" value="" placeholder="Dimensions" id="dim_id" class="form-control" />
+                                <label class="control-label" for="dim_id">Description</label>
+                                <input type="text" name="dimensions" value="" placeholder="Description" id="dim_id" class="form-control" />
                             </div>
                         </div>
 
@@ -40,15 +40,15 @@
 
                         <div class="col-sm-2">
                             <div class="form-group">
-                                <label class="control-label" for="lus_id">Luster Price</label>
-                                <input type="text" name="luster" value="" placeholder="Luster Price" id="lus_id" class="form-control" />
+                                <label class="control-label" for="lus_id">Luster</label>
+                                <input type="text" name="luster" value="" placeholder="price" id="lus_id" class="form-control" />
                             </div>
                         </div>
 
                         <div class="col-sm-2">
                             <div class="form-group">
-                                <label class="control-label" for="deep_id">Deep Matte Price</label>
-                                <input type="text" name="deep_matte" value="" placeholder="Deep Matte Price" id="deep_id" class="form-control" />
+                                <label class="control-label" for="deep_id">Deep Matte</label>
+                                <input type="text" name="deep_matte" value="" placeholder="price" id="deep_id" class="form-control" />
                             </div>
 
                         </div>
@@ -77,7 +77,7 @@
                             <tr>
 
                                 <td class="text-left">
-                                    Dimensions
+                                    Description
                                 </td>
                                 <td class="text-left">
                                     Size
@@ -217,8 +217,9 @@ $('#button-category').on('click', function () {
                      url += '&dimensions_edit='+ encodeURIComponent(dimensions[0])+ '&deep_matte_edit=' + encodeURIComponent(thevalue);
                 }
                   url += '&price_change=' + encodeURIComponent('price_change');
-                   location = url;
-                  
+                 location = url;
+                   
+              
 
                 } else {
                     alert("check your input for null and price should be a digit");

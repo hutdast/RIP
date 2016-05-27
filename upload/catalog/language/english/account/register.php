@@ -29,8 +29,6 @@ $_['entry_zone']           = 'Region / State';
 $_['entry_newsletter']     = 'Subscribe';
 $_['entry_password']       = 'Password';
 $_['entry_confirm']        = 'Password Confirm';
-$_['entry_folder_name']    = 'Folder Name: ';
-    
 
 // Error
 $_['error_exists']         = 'Warning: E-Mail Address is already registered!';

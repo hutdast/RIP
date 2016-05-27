@@ -71,7 +71,7 @@ class ControllerAccountWishList extends Controller {
 		$results = $this->model_account_wishlist->getWishlist();
 
 		foreach ($results as $result) {
-			$product_info = $this->model_catalog_product->getProduct($result['product_id']);
+			$product_info = $this->model_catalog_product->getProduct($result['product_name']);
 
 			if ($product_info) {
 				if ($product_info['image']) {
@@ -108,11 +108,11 @@ class ControllerAccountWishList extends Controller {
 					'stock'      => $stock,
 					'price'      => $price,
 					'special'    => $special,
-					'href'       => $this->url->link('product/product', 'product_id=' . $product_info['product_id']),
-					'remove'     => $this->url->link('account/wishlist', 'remove=' . $product_info['product_id'])
+					'href'       => $this->url->link('product/product', 'product_name=' . $product_info['product_name']),
+					'remove'     => $this->url->link('account/wishlist', 'remove=' . $product_info['product_name'])
 				);
 			} else {
-				$this->model_account_wishlist->deleteWishlist($product_id);
+				$this->model_account_wishlist->deleteWishlist($product_info['product_id']);
 			}
 		}
 
@@ -132,6 +132,10 @@ class ControllerAccountWishList extends Controller {
 		}
 	}
 
+        
+        
+       
+        
 	public function add() {
 		$this->load->language('account/wishlist');
                 

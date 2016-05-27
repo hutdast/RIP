@@ -18,12 +18,14 @@ class ControllerInformationContact extends Controller {
 			$mail->smtp_timeout = $this->config->get('config_mail_smtp_timeout');
 
 			$mail->setTo($this->config->get('config_email'));
+		
 			$mail->setFrom($this->request->post['email']);
+                       //$mail->setFrom($this->config->get('config_email'));
 			$mail->setSender(html_entity_decode($this->request->post['name'], ENT_QUOTES, 'UTF-8'));
 			$mail->setSubject(html_entity_decode(sprintf($this->language->get('email_subject'), $this->request->post['name']), ENT_QUOTES, 'UTF-8'));
 			$mail->setText($this->request->post['enquiry']);
 			$mail->send();
-
+	
 			$this->response->redirect($this->url->link('information/contact/success'));
 		}
 
@@ -94,7 +96,8 @@ class ControllerInformationContact extends Controller {
 		$data['fax'] = $this->config->get('config_fax');
 		$data['open'] = nl2br($this->config->get('config_open'));
 		$data['comment'] = $this->config->get('config_comment');
-
+		
+		$data['home'] =  $this->url->link('common/home');
 		$data['locations'] = array();
 
 		$this->load->model('localisation/location');
