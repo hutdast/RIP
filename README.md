@@ -1,12 +1,14 @@
 ### RIP Technologies
-RIP is a team of two [Armstrong State University](https://www.armstrong.edu) students: Charles Poole - designer and [Nikenson Midi - developer](http://klpnfamily.com/cv/nick).
+
 
 **** RIP Modifications *****
 
 IT IS VERY IMPORTANT TO NOTE THAT MOST OPENCART RECOMMENDATIONS SHOULD BE IGNORED AS THIS SOFTWARE IS EXTENSIVELY MODIFIED.
 
 
-RIP is a group of undergraduate students from Armstrong State University at the time of the construction of this application. Jan 12, 2016 thru May 6, 2016
+RIP is a group of undergraduate students from [Armstrong State University](https://www.armstrong.edu).
+- Date: Jan 12, 2016 thru May 6, 2016
+- Team members: Charles Poole - designer and [Nikenson Midi - developer](http://klpnfamily.com/cv/nick)
 
 The following files were modified in order to accomodate business needs:
 - Admin/catalog/checkout/cart => link rerouting 
